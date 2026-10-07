@@ -1,0 +1,176 @@
+[0.000000] (-) TimerEvent: {}
+[0.000362] (-) JobUnselected: {'identifier': 'ackermann_car_sim'}
+[0.000495] (rf2o_laser_odometry) JobQueued: {'identifier': 'rf2o_laser_odometry', 'dependencies': OrderedDict()}
+[0.000538] (rf2o_laser_odometry) JobStarted: {'identifier': 'rf2o_laser_odometry'}
+[0.009994] (rf2o_laser_odometry) JobProgress: {'identifier': 'rf2o_laser_odometry', 'progress': 'cmake'}
+[0.010918] (rf2o_laser_odometry) JobProgress: {'identifier': 'rf2o_laser_odometry', 'progress': 'build'}
+[0.011756] (rf2o_laser_odometry) Command: {'cmd': ['/usr/bin/cmake', '--build', '/home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry', '--', '-j16', '-l16'], 'cwd': '/home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry', 'env': OrderedDict([('GZ_SIM_SYSTEM_PLUGIN_PATH', '/home/ibrahim/gz_ws/src/ardupilot_gazebo/build:/home/ibrahim/ardupilot_gazebo/build:/home/ibrahim/ardupilot_gazebo/build:'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/home/ibrahim/Downloads/Antigravity IDE(1)/Antigravity IDE'), ('GZ_SIM_RESOURCE_PATH', '/home/ibrahim/gz_ws/src/ardupilot_gazebo/models:/home/ibrahim/gz_ws/src/ardupilot_gazebo/worlds:/home/ibrahim/ardupilot_gazebo/models:/home/ibrahim/ardupilot_gazebo/worlds:/home/ibrahim/ardupilot_gazebo/models:/home/ibrahim/ardupilot_gazebo/worlds:'), ('USER', 'ibrahim'), ('ANTIGRAVITY_SOURCE_METADATA', '{"tool":{"conversationId":"65114815-cee6-4f5a-922d-c93777295495","stepIndex":521,"toolCall":{"id":"call_485431","name":"run_command","argumentsJson":"{\\"CommandLine\\":\\"source /opt/ros/humble/setup.bash \\\\u0026\\\\u0026 colcon build --packages-select rf2o_laser_odometry\\",\\"Cwd\\":\\"/home/ibrahim/Desktop/Navigation\\",\\"WaitMsBeforeAsync\\":30000,\\"toolAction\\":\\"Build rf2o package\\",\\"toolSummary\\":\\"Recompile rf2o_laser_odometry\\"}","thinkingSignature":"Es0BCsoBARFNMg+kmYM2pKSX70uGryL1676YwL6sPmFtySV/igMeISjp01ztJHiy627bAiGesoe2u0DZceJswTBFKqQAfR14V1wPdL4XAIQ872VNFBdjev99ldNz6UM3vvNZrBNGSQAC0R3VOJsDnDBiDjVv1fzMlmNYMtL1zNs0Ya9Wz/7bT32+GQSJoYSoVat0KyAbbJpm/ecXjoQeNtZHsX1RB0T9RLlHVn2YGJ56h44+DOSWOiQ0dIOUolwVOKzew52RjN6UpGvQtSwe5A==","originalName":"run_command"}}}'), ('LC_TIME', 'tr_TR.UTF-8'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"/home/ibrahim/Downloads/Antigravity IDE(1)/Antigravity IDE/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}'), ('XDG_SESSION_TYPE', 'x11'), ('ANTIGRAVITY_AGENTAPI_EXE', '/home/ibrahim/Downloads/Antigravity IDE(1)/Antigravity IDE/resources/app/extensions/antigravity/bin/language_server_linux_x64'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/home/ibrahim/ardu_ws/install/micro_ros_agent/lib:/home/ibrahim/ardu_ws/install/ardupilot_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('CHROME_DESKTOP', 'antigravity-ide.desktop'), ('DESKTOP_SESSION', 'ubuntu'), ('VSCODE_IPC_HOOK', '/run/user/1000/vscode-a00a9eec-1.10-main.sock'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('PAGER', 'cat'), ('LC_MONETARY', 'tr_TR.UTF-8'), ('MANAGERPID', '1591'), ('ANTIGRAVITY_SAFECLIS_SOURCE', '/home/ibrahim/.gemini/antigravity-ide/bin/safeclis/src'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '2144'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=93a7c1714a8837fa5d56ea7c6aa1bd34'), ('ANTIGRAVITY_AGENT', '1'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '131963'), ('IM_CONFIG_PHASE', '1'), ('COLCON_PREFIX_PATH', '/home/ibrahim/ardu_ws/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'ibrahim'), ('JOURNAL_STREAM', '8:9948'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'dumb'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('FC_FONTATIONS', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('ANTIGRAVITY_LS_VERSION', 'ide-2.4.5'), ('ANTIGRAVITY_EDITOR_APP_ROOT', '/home/ibrahim/Downloads/Antigravity IDE(1)/Antigravity IDE/resources/app'), ('PATH', '/home/ibrahim/.gemini/antigravity-ide/bin:/home/ibrahim/.local/bin:/home/ibrahim/ardu_ws/src/ardupilot/Tools/autotest:/usr/lib/ccache:/home/ibrahim/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/ibrahim/.local/bin:/home/ibrahim/.local/bin:/home/ibrahim/ardu_ws/install/ardupilot_sitl/bin:/opt/ros/humble/bin:/home/ibrahim/.local/bin:/home/ibrahim/.local/bin:/home/ibrahim/ardu_ws/src/ardupilot/Tools/autotest:/usr/lib/ccache:/home/ibrahim/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/ibrahim/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/ibrahim/ardu_ws/Micro-XRCE-DDS-Gen/scripts:/home/ibrahim/Micro-XRCE-DDS-Gen/scripts'), ('SESSION_MANAGER', 'local/ibrahim-abra:@/tmp/.ICE-unix/2144,unix/ibrahim-abra:/tmp/.ICE-unix/2144'), ('INVOCATION_ID', '5a18bde2281e47e58aff30e572256bcf'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'tr_TR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('ANTIGRAVITY_CONVERSATION_ID', '65114815-cee6-4f5a-922d-c93777295495'), ('LC_TELEPHONE', 'tr_TR.UTF-8'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', ''), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '42'), ('AMENT_PREFIX_PATH', '/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ANTIGRAVITY_LS_ADDRESS', 'localhost:40107'), ('LC_NAME', 'tr_TR.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'tr_TR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('LC_IDENTIFICATION', 'tr_TR.UTF-8'), ('GIT_PAGER', 'cat'), ('QT_IM_MODULE', 'ibus'), ('ANTIGRAVITY_TRAJECTORY_ID', '4499141c-3706-491c-a5a1-a1fdbc4b1ee5'), ('PWD', '/home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('VSCODE_CODE_CACHE_PATH', '/home/ibrahim/.config/Antigravity IDE/CachedData/ecfbad74d93962fc8ca485d93ab9b4f3d4cb6cf8'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=93a7c1714a8837fa5d56ea7c6aa1bd34'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ibrahim/ardu_ws/install/ardupilot_dds_tests/lib/python3.10/site-packages:/home/ibrahim/ardu_ws/install/ardupilot_sitl/local/lib/python3.10/dist-packages:/home/ibrahim/ardu_ws/install/ardupilot_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'tr_TR.UTF-8'), ('LC_PAPER', 'tr_TR.UTF-8'), ('COLCON', '1'), ('ANTIGRAVITY_CSRF_TOKEN', '31dbe48a-6736-4256-bd13-484dfdc4bde5'), ('CMAKE_PREFIX_PATH', '/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble'), ('VSCODE_PID', '131963')]), 'shell': False}
+[0.057773] (rf2o_laser_odometry) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target rf2o_laser_odometry\x1b[0m\n'}
+[0.059167] (rf2o_laser_odometry) StdoutLine: {'line': b'\x1b[35m\x1b[1mConsolidate compiler generated dependencies of target rf2o_laser_odometry_node\x1b[0m\n'}
+[0.081871] (rf2o_laser_odometry) StdoutLine: {'line': b'[ 40%] Built target rf2o_laser_odometry\n'}
+[0.089846] (rf2o_laser_odometry) StdoutLine: {'line': b'[ 60%] \x1b[32mBuilding CXX object CMakeFiles/rf2o_laser_odometry_node.dir/src/CLaserOdometry2DNode.cpp.o\x1b[0m\n'}
+[0.099697] (-) TimerEvent: {}
+[0.200085] (-) TimerEvent: {}
+[0.300443] (-) TimerEvent: {}
+[0.400829] (-) TimerEvent: {}
+[0.501090] (-) TimerEvent: {}
+[0.601500] (-) TimerEvent: {}
+[0.701805] (-) TimerEvent: {}
+[0.802065] (-) TimerEvent: {}
+[0.902380] (-) TimerEvent: {}
+[1.002624] (-) TimerEvent: {}
+[1.102910] (-) TimerEvent: {}
+[1.203172] (-) TimerEvent: {}
+[1.303485] (-) TimerEvent: {}
+[1.403807] (-) TimerEvent: {}
+[1.504149] (-) TimerEvent: {}
+[1.604453] (-) TimerEvent: {}
+[1.704728] (-) TimerEvent: {}
+[1.805039] (-) TimerEvent: {}
+[1.905367] (-) TimerEvent: {}
+[2.005691] (-) TimerEvent: {}
+[2.106051] (-) TimerEvent: {}
+[2.206398] (-) TimerEvent: {}
+[2.306720] (-) TimerEvent: {}
+[2.407068] (-) TimerEvent: {}
+[2.507456] (-) TimerEvent: {}
+[2.607770] (-) TimerEvent: {}
+[2.708122] (-) TimerEvent: {}
+[2.808432] (-) TimerEvent: {}
+[2.908782] (-) TimerEvent: {}
+[3.009105] (-) TimerEvent: {}
+[3.109418] (-) TimerEvent: {}
+[3.209730] (-) TimerEvent: {}
+[3.310047] (-) TimerEvent: {}
+[3.410377] (-) TimerEvent: {}
+[3.510703] (-) TimerEvent: {}
+[3.611051] (-) TimerEvent: {}
+[3.711443] (-) TimerEvent: {}
+[3.811858] (-) TimerEvent: {}
+[3.912188] (-) TimerEvent: {}
+[4.012491] (-) TimerEvent: {}
+[4.112850] (-) TimerEvent: {}
+[4.213294] (-) TimerEvent: {}
+[4.313626] (-) TimerEvent: {}
+[4.413946] (-) TimerEvent: {}
+[4.514263] (-) TimerEvent: {}
+[4.614599] (-) TimerEvent: {}
+[4.714909] (-) TimerEvent: {}
+[4.815231] (-) TimerEvent: {}
+[4.915624] (-) TimerEvent: {}
+[5.015969] (-) TimerEvent: {}
+[5.116315] (-) TimerEvent: {}
+[5.216642] (-) TimerEvent: {}
+[5.317026] (-) TimerEvent: {}
+[5.417353] (-) TimerEvent: {}
+[5.517642] (-) TimerEvent: {}
+[5.617969] (-) TimerEvent: {}
+[5.718292] (-) TimerEvent: {}
+[5.818604] (-) TimerEvent: {}
+[5.918865] (-) TimerEvent: {}
+[6.019122] (-) TimerEvent: {}
+[6.119512] (-) TimerEvent: {}
+[6.219826] (-) TimerEvent: {}
+[6.320124] (-) TimerEvent: {}
+[6.420461] (-) TimerEvent: {}
+[6.520831] (-) TimerEvent: {}
+[6.621116] (-) TimerEvent: {}
+[6.721440] (-) TimerEvent: {}
+[6.821765] (-) TimerEvent: {}
+[6.922153] (-) TimerEvent: {}
+[7.022452] (-) TimerEvent: {}
+[7.122756] (-) TimerEvent: {}
+[7.223054] (-) TimerEvent: {}
+[7.323364] (-) TimerEvent: {}
+[7.423703] (-) TimerEvent: {}
+[7.523995] (-) TimerEvent: {}
+[7.624326] (-) TimerEvent: {}
+[7.724762] (-) TimerEvent: {}
+[7.825147] (-) TimerEvent: {}
+[7.925387] (-) TimerEvent: {}
+[8.025628] (-) TimerEvent: {}
+[8.125930] (-) TimerEvent: {}
+[8.226488] (-) TimerEvent: {}
+[8.326847] (-) TimerEvent: {}
+[8.427235] (-) TimerEvent: {}
+[8.527550] (-) TimerEvent: {}
+[8.627867] (-) TimerEvent: {}
+[8.728215] (-) TimerEvent: {}
+[8.828536] (-) TimerEvent: {}
+[8.928875] (-) TimerEvent: {}
+[9.029204] (-) TimerEvent: {}
+[9.129495] (-) TimerEvent: {}
+[9.229821] (-) TimerEvent: {}
+[9.330149] (-) TimerEvent: {}
+[9.430457] (-) TimerEvent: {}
+[9.530763] (-) TimerEvent: {}
+[9.631098] (-) TimerEvent: {}
+[9.731386] (-) TimerEvent: {}
+[9.831757] (-) TimerEvent: {}
+[9.932065] (-) TimerEvent: {}
+[10.032376] (-) TimerEvent: {}
+[10.132709] (-) TimerEvent: {}
+[10.233024] (-) TimerEvent: {}
+[10.333329] (-) TimerEvent: {}
+[10.433637] (-) TimerEvent: {}
+[10.533949] (-) TimerEvent: {}
+[10.634275] (-) TimerEvent: {}
+[10.734634] (-) TimerEvent: {}
+[10.834974] (-) TimerEvent: {}
+[10.935275] (-) TimerEvent: {}
+[11.035511] (-) TimerEvent: {}
+[11.135775] (-) TimerEvent: {}
+[11.236119] (-) TimerEvent: {}
+[11.336477] (-) TimerEvent: {}
+[11.436794] (-) TimerEvent: {}
+[11.537160] (-) TimerEvent: {}
+[11.637495] (-) TimerEvent: {}
+[11.737889] (-) TimerEvent: {}
+[11.838362] (-) TimerEvent: {}
+[11.938786] (-) TimerEvent: {}
+[12.039104] (-) TimerEvent: {}
+[12.139425] (-) TimerEvent: {}
+[12.239644] (-) TimerEvent: {}
+[12.339928] (-) TimerEvent: {}
+[12.379152] (rf2o_laser_odometry) StdoutLine: {'line': b'[ 80%] \x1b[32m\x1b[1mLinking CXX executable rf2o_laser_odometry_node\x1b[0m\n'}
+[12.440040] (-) TimerEvent: {}
+[12.540355] (-) TimerEvent: {}
+[12.640649] (-) TimerEvent: {}
+[12.741111] (-) TimerEvent: {}
+[12.841397] (-) TimerEvent: {}
+[12.941816] (-) TimerEvent: {}
+[13.042117] (-) TimerEvent: {}
+[13.142521] (-) TimerEvent: {}
+[13.242881] (-) TimerEvent: {}
+[13.343298] (-) TimerEvent: {}
+[13.443643] (-) TimerEvent: {}
+[13.544050] (-) TimerEvent: {}
+[13.644372] (-) TimerEvent: {}
+[13.740725] (rf2o_laser_odometry) StdoutLine: {'line': b'[100%] Built target rf2o_laser_odometry_node\n'}
+[13.744464] (-) TimerEvent: {}
+[13.752284] (rf2o_laser_odometry) CommandEnded: {'returncode': 0}
+[13.753118] (rf2o_laser_odometry) JobProgress: {'identifier': 'rf2o_laser_odometry', 'progress': 'install'}
+[13.763771] (rf2o_laser_odometry) Command: {'cmd': ['/usr/bin/cmake', '--install', '/home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry'], 'cwd': '/home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry', 'env': OrderedDict([('GZ_SIM_SYSTEM_PLUGIN_PATH', '/home/ibrahim/gz_ws/src/ardupilot_gazebo/build:/home/ibrahim/ardupilot_gazebo/build:/home/ibrahim/ardupilot_gazebo/build:'), ('LESSOPEN', '| /usr/bin/lesspipe %s'), ('VSCODE_CWD', '/home/ibrahim/Downloads/Antigravity IDE(1)/Antigravity IDE'), ('GZ_SIM_RESOURCE_PATH', '/home/ibrahim/gz_ws/src/ardupilot_gazebo/models:/home/ibrahim/gz_ws/src/ardupilot_gazebo/worlds:/home/ibrahim/ardupilot_gazebo/models:/home/ibrahim/ardupilot_gazebo/worlds:/home/ibrahim/ardupilot_gazebo/models:/home/ibrahim/ardupilot_gazebo/worlds:'), ('USER', 'ibrahim'), ('ANTIGRAVITY_SOURCE_METADATA', '{"tool":{"conversationId":"65114815-cee6-4f5a-922d-c93777295495","stepIndex":521,"toolCall":{"id":"call_485431","name":"run_command","argumentsJson":"{\\"CommandLine\\":\\"source /opt/ros/humble/setup.bash \\\\u0026\\\\u0026 colcon build --packages-select rf2o_laser_odometry\\",\\"Cwd\\":\\"/home/ibrahim/Desktop/Navigation\\",\\"WaitMsBeforeAsync\\":30000,\\"toolAction\\":\\"Build rf2o package\\",\\"toolSummary\\":\\"Recompile rf2o_laser_odometry\\"}","thinkingSignature":"Es0BCsoBARFNMg+kmYM2pKSX70uGryL1676YwL6sPmFtySV/igMeISjp01ztJHiy627bAiGesoe2u0DZceJswTBFKqQAfR14V1wPdL4XAIQ872VNFBdjev99ldNz6UM3vvNZrBNGSQAC0R3VOJsDnDBiDjVv1fzMlmNYMtL1zNs0Ya9Wz/7bT32+GQSJoYSoVat0KyAbbJpm/ecXjoQeNtZHsX1RB0T9RLlHVn2YGJ56h44+DOSWOiQ0dIOUolwVOKzew52RjN6UpGvQtSwe5A==","originalName":"run_command"}}}'), ('LC_TIME', 'tr_TR.UTF-8'), ('VSCODE_NLS_CONFIG', '{"userLocale":"en-us","osLocale":"en-us","resolvedLanguage":"en","defaultMessagesFile":"/home/ibrahim/Downloads/Antigravity IDE(1)/Antigravity IDE/resources/app/out/nls.messages.json","locale":"en-us","availableLanguages":{}}'), ('XDG_SESSION_TYPE', 'x11'), ('ANTIGRAVITY_AGENTAPI_EXE', '/home/ibrahim/Downloads/Antigravity IDE(1)/Antigravity IDE/resources/app/extensions/antigravity/bin/language_server_linux_x64'), ('SHLVL', '0'), ('LD_LIBRARY_PATH', '/home/ibrahim/ardu_ws/install/micro_ros_agent/lib:/home/ibrahim/ardu_ws/install/ardupilot_msgs/lib:/opt/ros/humble/opt/rviz_ogre_vendor/lib:/opt/ros/humble/lib/x86_64-linux-gnu:/opt/ros/humble/lib'), ('HOME', '/home/ibrahim'), ('CHROME_DESKTOP', 'antigravity-ide.desktop'), ('DESKTOP_SESSION', 'ubuntu'), ('VSCODE_IPC_HOOK', '/run/user/1000/vscode-a00a9eec-1.10-main.sock'), ('ROS_PYTHON_VERSION', '3'), ('GNOME_SHELL_SESSION_MODE', 'ubuntu'), ('GTK_MODULES', 'gail:atk-bridge'), ('PAGER', 'cat'), ('LC_MONETARY', 'tr_TR.UTF-8'), ('MANAGERPID', '1591'), ('ANTIGRAVITY_SAFECLIS_SOURCE', '/home/ibrahim/.gemini/antigravity-ide/bin/safeclis/src'), ('DBUS_STARTER_BUS_TYPE', 'session'), ('SYSTEMD_EXEC_PID', '2144'), ('DBUS_SESSION_BUS_ADDRESS', 'unix:path=/run/user/1000/bus,guid=93a7c1714a8837fa5d56ea7c6aa1bd34'), ('ANTIGRAVITY_AGENT', '1'), ('GIO_LAUNCHED_DESKTOP_FILE_PID', '131963'), ('IM_CONFIG_PHASE', '1'), ('COLCON_PREFIX_PATH', '/home/ibrahim/ardu_ws/install'), ('ROS_DISTRO', 'humble'), ('GTK_IM_MODULE', 'ibus'), ('LOGNAME', 'ibrahim'), ('JOURNAL_STREAM', '8:9948'), ('_', '/usr/bin/colcon'), ('ROS_VERSION', '2'), ('XDG_SESSION_CLASS', 'user'), ('USERNAME', 'ibrahim'), ('TERM', 'dumb'), ('GNOME_DESKTOP_SESSION_ID', 'this-is-deprecated'), ('FC_FONTATIONS', '1'), ('ROS_LOCALHOST_ONLY', '0'), ('WINDOWPATH', '2'), ('ANTIGRAVITY_LS_VERSION', 'ide-2.4.5'), ('ANTIGRAVITY_EDITOR_APP_ROOT', '/home/ibrahim/Downloads/Antigravity IDE(1)/Antigravity IDE/resources/app'), ('PATH', '/home/ibrahim/.gemini/antigravity-ide/bin:/home/ibrahim/.local/bin:/home/ibrahim/ardu_ws/src/ardupilot/Tools/autotest:/usr/lib/ccache:/home/ibrahim/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/ibrahim/.local/bin:/home/ibrahim/.local/bin:/home/ibrahim/ardu_ws/install/ardupilot_sitl/bin:/opt/ros/humble/bin:/home/ibrahim/.local/bin:/home/ibrahim/.local/bin:/home/ibrahim/ardu_ws/src/ardupilot/Tools/autotest:/usr/lib/ccache:/home/ibrahim/ardupilot/Tools/autotest:/opt/gcc-arm-none-eabi-10-2020-q4-major/bin:/home/ibrahim/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/snap/bin:/home/ibrahim/ardu_ws/Micro-XRCE-DDS-Gen/scripts:/home/ibrahim/Micro-XRCE-DDS-Gen/scripts'), ('SESSION_MANAGER', 'local/ibrahim-abra:@/tmp/.ICE-unix/2144,unix/ibrahim-abra:/tmp/.ICE-unix/2144'), ('INVOCATION_ID', '5a18bde2281e47e58aff30e572256bcf'), ('XDG_MENU_PREFIX', 'gnome-'), ('LC_ADDRESS', 'tr_TR.UTF-8'), ('XDG_RUNTIME_DIR', '/run/user/1000'), ('GDK_BACKEND', 'x11'), ('DISPLAY', ':0'), ('LANG', 'en_US.UTF-8'), ('XDG_CURRENT_DESKTOP', 'ubuntu:GNOME'), ('ANTIGRAVITY_CONVERSATION_ID', '65114815-cee6-4f5a-922d-c93777295495'), ('LC_TELEPHONE', 'tr_TR.UTF-8'), ('RMW_IMPLEMENTATION', 'rmw_cyclonedds_cpp'), ('XMODIFIERS', '@im=ibus'), ('XDG_SESSION_DESKTOP', 'ubuntu'), ('XAUTHORITY', '/run/user/1000/gdm/Xauthority'), ('LS_COLORS', ''), ('SSH_AGENT_LAUNCHER', 'gnome-keyring'), ('SSH_AUTH_SOCK', '/run/user/1000/keyring/ssh'), ('ROS_DOMAIN_ID', '42'), ('AMENT_PREFIX_PATH', '/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/opt/ros/humble'), ('SHELL', '/bin/bash'), ('ANTIGRAVITY_LS_ADDRESS', 'localhost:40107'), ('LC_NAME', 'tr_TR.UTF-8'), ('QT_ACCESSIBILITY', '1'), ('GDMSESSION', 'ubuntu'), ('LESSCLOSE', '/usr/bin/lesspipe %s %s'), ('LC_MEASUREMENT', 'tr_TR.UTF-8'), ('GPG_AGENT_INFO', '/run/user/1000/gnupg/S.gpg-agent:0:1'), ('LC_IDENTIFICATION', 'tr_TR.UTF-8'), ('GIT_PAGER', 'cat'), ('QT_IM_MODULE', 'ibus'), ('ANTIGRAVITY_TRAJECTORY_ID', '4499141c-3706-491c-a5a1-a1fdbc4b1ee5'), ('PWD', '/home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry'), ('LC_ALL', 'en_US.UTF-8'), ('XDG_CONFIG_DIRS', '/etc/xdg/xdg-ubuntu:/etc/xdg'), ('VSCODE_CODE_CACHE_PATH', '/home/ibrahim/.config/Antigravity IDE/CachedData/ecfbad74d93962fc8ca485d93ab9b4f3d4cb6cf8'), ('DBUS_STARTER_ADDRESS', 'unix:path=/run/user/1000/bus,guid=93a7c1714a8837fa5d56ea7c6aa1bd34'), ('XDG_DATA_DIRS', '/usr/share/ubuntu:/usr/share/gnome:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop'), ('PYTHONPATH', '/home/ibrahim/ardu_ws/install/ardupilot_dds_tests/lib/python3.10/site-packages:/home/ibrahim/ardu_ws/install/ardupilot_sitl/local/lib/python3.10/dist-packages:/home/ibrahim/ardu_ws/install/ardupilot_msgs/local/lib/python3.10/dist-packages:/opt/ros/humble/lib/python3.10/site-packages:/opt/ros/humble/local/lib/python3.10/dist-packages'), ('LC_NUMERIC', 'tr_TR.UTF-8'), ('LC_PAPER', 'tr_TR.UTF-8'), ('COLCON', '1'), ('ANTIGRAVITY_CSRF_TOKEN', '31dbe48a-6736-4256-bd13-484dfdc4bde5'), ('CMAKE_PREFIX_PATH', '/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble'), ('VSCODE_PID', '131963')]), 'shell': False}
+[13.774165] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Install configuration: ""\n'}
+[13.774417] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Installing: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/lib/rf2o_laser_odometry/rf2o_laser_odometry_node\n'}
+[13.784093] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Set runtime path of "/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/lib/rf2o_laser_odometry/rf2o_laser_odometry_node" to ""\n'}
+[13.784407] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/launch\n'}
+[13.784539] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/launch/rf2o_laser_odometry.launch.py\n'}
+[13.784656] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/ament_index/resource_index/package_run_dependencies/rf2o_laser_odometry\n'}
+[13.784747] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/ament_index/resource_index/parent_prefix_path/rf2o_laser_odometry\n'}
+[13.784833] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/environment/ament_prefix_path.sh\n'}
+[13.784918] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/environment/ament_prefix_path.dsv\n'}
+[13.785000] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/environment/path.sh\n'}
+[13.785082] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/environment/path.dsv\n'}
+[13.785162] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/local_setup.bash\n'}
+[13.785241] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/local_setup.sh\n'}
+[13.785315] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/local_setup.zsh\n'}
+[13.785392] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/local_setup.dsv\n'}
+[13.785469] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Installing: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/package.dsv\n'}
+[13.785548] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/ament_index/resource_index/packages/rf2o_laser_odometry\n'}
+[13.785938] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/cmake/rf2o_laser_odometryConfig.cmake\n'}
+[13.786131] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/cmake/rf2o_laser_odometryConfig-version.cmake\n'}
+[13.786178] (rf2o_laser_odometry) StdoutLine: {'line': b'-- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/package.xml\n'}
+[13.786655] (rf2o_laser_odometry) CommandEnded: {'returncode': 0}
+[13.803551] (rf2o_laser_odometry) JobEnded: {'identifier': 'rf2o_laser_odometry', 'rc': 0}
+[13.804485] (-) EventReactorShutdown: {}

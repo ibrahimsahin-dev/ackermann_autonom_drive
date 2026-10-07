@@ -1,0 +1,237 @@
+amcl:
+  ros__parameters:
+    use_sim_time: True
+    set_initial_pose: true
+    initial_pose:
+      x: -3.5
+      y: -2.5
+      z: 0.0
+      yaw: 0.0
+    alpha1: 0.1
+    alpha2: 0.1
+    alpha3: 0.1
+    alpha4: 0.1
+    alpha5: 0.1
+    base_frame_id: "base_footprint"
+    beam_skip_distance: 0.5
+    beam_skip_error_threshold: 0.9
+    beam_skip_threshold: 0.3
+    do_beamskip: false
+    global_frame_id: "map"
+    lambda_short: 0.1
+    laser_likelihood_max_dist: 2.0
+    laser_max_range: 5.6
+    laser_min_range: 0.06
+    laser_model_type: "likelihood_field"
+    max_beams: 120
+    max_particles: 3500
+    min_particles: 1000
+    odom_frame_id: "odom"
+    pf_err: 0.05
+    pf_z: 0.99
+    recovery_alpha_fast: 0.0
+    recovery_alpha_slow: 0.0
+    resample_interval: 1
+    robot_model_type: "nav2_amcl::OmniMotionModel"  # Ackermann robotu için Omni model (Diff yanlış)
+    save_pose_rate: 0.5
+    sigma_hit: 0.15
+    tf_broadcast: true
+    transform_tolerance: 1.0
+    update_min_a: 0.10
+    update_min_d: 0.10
+    z_hit: 0.85
+    z_max: 0.05
+    z_rand: 0.15
+    z_short: 0.05
+    scan_topic: /scan
+
+bt_navigator:
+  ros__parameters:
+    use_sim_time: True
+    global_frame: map
+    robot_base_frame: base_footprint
+    odom_topic: /odom
+    bt_loop_duration: 10
+    default_server_timeout: 20
+    wait_for_service_timeout: 1000
+    navigators: ['navigate_to_pose', 'navigate_through_poses']
+    navigate_to_pose:
+      plugin: "nav2_bt_navigator/NavigateToPoseNavigator"
+    navigate_through_poses:
+      plugin: "nav2_bt_navigator/NavigateThroughPosesNavigator"
+
+controller_server:
+  ros__parameters:
+    use_sim_time: True
+    controller_frequency: 20.0
+    min_x_velocity_threshold: 0.001
+    min_y_velocity_threshold: 0.001  # Ackermann robotu Y-ekseninde hareket yapmaz — düzeltildi
+    min_theta_velocity_threshold: 0.001
+    failure_tolerance: 0.3
+    progress_checker_plugin: "progress_checker"
+    goal_checker_plugins: ["general_goal_checker"]
+    controller_plugins: ["FollowPath"]
+
+    progress_checker:
+      plugin: "nav2_controller::SimpleProgressChecker"
+      required_movement_radius: 0.3
+      movement_time_allowance: 10.0
+
+    general_goal_checker:
+      stateful: True
+      plugin: "nav2_controller::SimpleGoalChecker"
+      xy_goal_tolerance: 0.35
+      yaw_goal_tolerance: 3.14
+
+    FollowPath:
+      plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
+      desired_linear_vel: 0.30          # Biraz daha dikkatli hız
+      lookahead_dist: 0.40              # Ackermann min turning radius (~0.24m) göz önüne alındı
+      min_lookahead_dist: 0.25          # Min turning radius ile eşleştirildi
+      max_lookahead_dist: 0.65
+      lookahead_time: 1.5
+      rotate_to_heading_angular_vel: 0.0
+      use_rotate_to_heading: false       # Ackermann yerinde dönemez
+      allow_reversing: false
+      max_robot_pose_search_dist: 10.0
+      use_cost_regulated_linear_velocity_scaling: true
+      cost_scaling_dist: 0.5             # Engele yaklaşınca daha erken yavaşla
+      cost_scaling_gain: 1.5             # Yavaşlama katsayısı artırıldı
+      inflation_cost_scaling_factor: 3.5 # Engel yakınında maliyet cezası artırıldı
+      use_regulated_linear_velocity_scaling: true
+      regulated_linear_scaling_min_radius: 0.25  # Ackermann min turning radius
+      regulated_linear_scaling_min_speed: 0.10
+      use_collision_detection: true
+      max_allowed_time_to_collision_up_to_fast_stop: 1.2  # Daha erken durdur
+
+local_costmap:
+  local_costmap:
+    ros__parameters:
+      update_frequency: 10.0   # 5→10 Hz: Daha hızlı engel güncellemesi
+      publish_frequency: 5.0
+      global_frame: odom
+      robot_base_frame: base_footprint
+      use_sim_time: True
+      rolling_window: true
+      width: 4
+      height: 4
+      resolution: 0.05
+      # Gerçek robot boyutları (chassis 0.28m x 0.13m) + tekerlek çıkıntısı
+      footprint: "[[0.15, 0.07], [0.15, -0.07], [-0.15, -0.07], [-0.15, 0.07]]"
+      footprint_padding: 0.02  # 2cm ek güvenlik payı
+      plugins: ["obstacle_layer", "inflation_layer"]
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: True
+        observation_sources: scan
+        scan:
+          topic: /scan
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: "LaserScan"
+          raytrace_max_range: 5.5
+          obstacle_max_range: 5.0
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 3.5   # Artırıldı — engele yaklaşınca maliyet hızlı artar
+        inflation_radius: 0.70     # 0.55→0.70m: Daha geniş güvenlik balonu
+      always_send_full_costmap: True
+
+global_costmap:
+  global_costmap:
+    ros__parameters:
+      update_frequency: 2.0
+      publish_frequency: 1.0
+      global_frame: map
+      robot_base_frame: base_footprint
+      use_sim_time: True
+      # Gerçek robot footprint — local_costmap ile senkron
+      footprint: "[[0.15, 0.07], [0.15, -0.07], [-0.15, -0.07], [-0.15, 0.07]]"
+      footprint_padding: 0.02
+      resolution: 0.05
+      track_unknown_space: true
+      plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
+      static_layer:
+        plugin: "nav2_costmap_2d::StaticLayer"
+        map_subscribe_transient_local: True
+      obstacle_layer:
+        plugin: "nav2_costmap_2d::ObstacleLayer"
+        enabled: True
+        observation_sources: scan
+        scan:
+          topic: /scan
+          max_obstacle_height: 2.0
+          clearing: True
+          marking: True
+          data_type: "LaserScan"
+          raytrace_max_range: 5.5
+          obstacle_max_range: 5.0
+      inflation_layer:
+        plugin: "nav2_costmap_2d::InflationLayer"
+        cost_scaling_factor: 3.5   # Local ile eşleştirildi
+        inflation_radius: 0.70     # Local ile eşleştirildi
+      always_send_full_costmap: True
+
+map_server:
+  ros__parameters:
+    use_sim_time: True
+    yaml_filename: ""
+
+planner_server:
+  ros__parameters:
+    expected_planner_frequency: 20.0
+    use_sim_time: True
+    planner_plugins: ["GridBased"]
+    GridBased:
+      plugin: "nav2_smac_planner/SmacPlannerHybrid" # Ackermann & Footprint Odaklı Akıllı Planlayıcı
+      downsample_costmap: false
+      downsampling_factor: 1
+      tolerance: 0.25
+      allow_unknown: true
+      max_iterations: 1000000
+      max_on_approach_iterations: 1000
+      max_planning_time: 2.0
+      analytic_expansion_ratio: 3.5
+      analytic_expansion_max_length: 3.0
+      reverse_penalty: 2.5            # Mecbur kalmadıkça geriye rota çizmesin
+      change_penalty: 0.1
+      non_straight_penalty: 1.10
+      cost_penalty: 2.0               # Engellere/dar alanlara yaklaşma cezası
+      retries: 10
+      minimum_turning_radius: 0.25    # Ackermann aracın min dönüş yarıçapı
+      lookup_table_size: 20.0
+      cache_obstacle_heuristic: false
+      debug_visualizations: false
+
+behavior_server:
+  ros__parameters:
+    costmap_topic: local_costmap/costmap_raw
+    footprint_topic: local_costmap/published_footprint
+    cycle_frequency: 10.0
+    # Recovery sırası değiştirildi: Ackermann yerinde dönemez → spin son sıraya alındı
+    behavior_plugins: ["backup", "drive_on_heading", "wait", "spin", "assisted_teleop"]
+    spin:
+      plugin: "nav2_behaviors/Spin"
+    backup:
+      plugin: "nav2_behaviors/BackUp"
+    drive_on_heading:
+      plugin: "nav2_behaviors/DriveOnHeading"
+    wait:
+      plugin: "nav2_behaviors/Wait"
+    assisted_teleop:
+      plugin: "nav2_behaviors/AssistedTeleop"
+    global_frame: odom
+    robot_base_frame: base_footprint
+    transform_tolerance: 0.1
+    use_sim_time: True
+
+waypoint_follower:
+  ros__parameters:
+    loop_rate: 20
+    stop_on_failure: false
+    waypoint_task_executor_plugin: "wait_at_waypoint"
+    wait_at_waypoint:
+      plugin: "nav2_waypoint_follower::WaitAtWaypoint"
+      enabled: True
+      waypoint_pause_duration: 200

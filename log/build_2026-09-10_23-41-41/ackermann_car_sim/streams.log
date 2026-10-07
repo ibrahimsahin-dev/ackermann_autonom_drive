@@ -1,0 +1,34 @@
+[0.020s] Invoking command in '/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim': AMENT_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/Desktop/Navigation/build/ackermann_car_sim -- -j16 -l16
+[0.090s] Invoked command in '/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim' returned '0': AMENT_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/Desktop/Navigation/build/ackermann_car_sim -- -j16 -l16
+[0.100s] Invoking command in '/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim': AMENT_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/Desktop/Navigation/build/ackermann_car_sim
+[0.108s] -- Install configuration: ""
+[0.110s] -- Execute custom install script
+[0.110s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/urdf/ackermann_car.urdf.xacro
+[0.111s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/worlds/test_arena.sdf
+[0.111s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/config/nav2_params.yaml
+[0.111s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/config/nav2_rviz.rviz
+[0.112s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/config/sim_rviz.rviz
+[0.112s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/config/slam_toolbox_params.yaml
+[0.112s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/launch/nav2.launch.py
+[0.112s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/launch/sim.launch.py
+[0.113s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/launch/slam.launch.py
+[0.113s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/maps/arena_map.pgm
+[0.114s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/maps/arena_map.yaml
+[0.114s] -- Symlinking: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/maps/arena_map_cyber.png
+[0.123s] -- Symlinking: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/maps/arena_map_highvis.png
+[0.133s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ament_index/resource_index/package_run_dependencies/ackermann_car_sim
+[0.133s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ament_index/resource_index/parent_prefix_path/ackermann_car_sim
+[0.134s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/environment/ament_prefix_path.sh
+[0.134s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/environment/ament_prefix_path.dsv
+[0.134s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/environment/path.sh
+[0.134s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/environment/path.dsv
+[0.134s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/local_setup.bash
+[0.134s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/local_setup.sh
+[0.134s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/local_setup.zsh
+[0.134s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/local_setup.dsv
+[0.134s] -- Symlinking: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.dsv
+[0.147s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ament_index/resource_index/packages/ackermann_car_sim
+[0.147s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/cmake/ackermann_car_simConfig.cmake
+[0.147s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/cmake/ackermann_car_simConfig-version.cmake
+[0.148s] -- Up-to-date symlink: /home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.xml
+[0.150s] Invoked command in '/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim' returned '0': AMENT_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/Desktop/Navigation/build/ackermann_car_sim

@@ -1,0 +1,30 @@
+[0.013s] Invoking command in '/home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry -- -j16 -l16
+[0.057s] [35m[1mConsolidate compiler generated dependencies of target rf2o_laser_odometry[0m
+[0.059s] [35m[1mConsolidate compiler generated dependencies of target rf2o_laser_odometry_node[0m
+[0.081s] [ 40%] Built target rf2o_laser_odometry
+[0.089s] [ 60%] [32mBuilding CXX object CMakeFiles/rf2o_laser_odometry_node.dir/src/CLaserOdometry2DNode.cpp.o[0m
+[12.379s] [ 80%] [32m[1mLinking CXX executable rf2o_laser_odometry_node[0m
+[13.740s] [100%] Built target rf2o_laser_odometry_node
+[13.752s] Invoked command in '/home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry -- -j16 -l16
+[13.764s] Invoking command in '/home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry
+[13.774s] -- Install configuration: ""
+[13.774s] -- Installing: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/lib/rf2o_laser_odometry/rf2o_laser_odometry_node
+[13.784s] -- Set runtime path of "/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/lib/rf2o_laser_odometry/rf2o_laser_odometry_node" to ""
+[13.784s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/launch
+[13.784s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/launch/rf2o_laser_odometry.launch.py
+[13.784s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/ament_index/resource_index/package_run_dependencies/rf2o_laser_odometry
+[13.784s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/ament_index/resource_index/parent_prefix_path/rf2o_laser_odometry
+[13.784s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/environment/ament_prefix_path.sh
+[13.784s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/environment/ament_prefix_path.dsv
+[13.785s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/environment/path.sh
+[13.785s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/environment/path.dsv
+[13.785s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/local_setup.bash
+[13.785s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/local_setup.sh
+[13.785s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/local_setup.zsh
+[13.785s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/local_setup.dsv
+[13.785s] -- Installing: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/package.dsv
+[13.785s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/ament_index/resource_index/packages/rf2o_laser_odometry
+[13.786s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/cmake/rf2o_laser_odometryConfig.cmake
+[13.786s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/cmake/rf2o_laser_odometryConfig-version.cmake
+[13.786s] -- Up-to-date: /home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry/share/rf2o_laser_odometry/package.xml
+[13.786s] Invoked command in '/home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry' returned '0': CMAKE_PREFIX_PATH=${CMAKE_PREFIX_PATH}:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/Desktop/Navigation/build/rf2o_laser_odometry

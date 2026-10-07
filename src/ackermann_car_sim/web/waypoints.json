@@ -1,0 +1,42 @@
+[
+  {
+    "id": "dock",
+    "code": "DOCK",
+    "name": "Ana Şarj İstasyonu",
+    "x": -3.5,
+    "y": -2.5,
+    "yaw": 0.0,
+    "icon": "charging-station",
+    "type": "charge"
+  },
+  {
+    "id": "st01",
+    "code": "ST-01",
+    "name": "Yükleme & Üretim İstasyonu",
+    "x": -2.5,
+    "y": 2.2,
+    "yaw": 0.0,
+    "icon": "industry",
+    "type": "station"
+  },
+  {
+    "id": "st02",
+    "code": "ST-02",
+    "name": "Boşaltma & Montaj İstasyonu",
+    "x": 3.5,
+    "y": -2.2,
+    "yaw": 1.57,
+    "icon": "warehouse",
+    "type": "station"
+  },
+  {
+    "id": "st03",
+    "code": "ST-03",
+    "name": "Depolama & Sevkiyat Noktası",
+    "x": 1.5,
+    "y": 2.5,
+    "yaw": -1.57,
+    "icon": "dolly",
+    "type": "checkpoint"
+  }
+]

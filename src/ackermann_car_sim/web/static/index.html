@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>LOGIX AMR | Commercial Fleet Monitoring & SLAM SCADA</title>
+  
+  <!-- Font Awesome 6 Pro Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- External Stylesheet -->
+  <link rel="stylesheet" href="/css/style.css?v=20260910_commercial_scada_v5">
+
+  <style>
+/* ==============================================================================
+   LOGIX AMR - COMMERCIAL INDUSTRIAL FLEET SCADA & SLAM SYSTEM
+   100% Visual Parity with Slamtec / Geek+ / MiR Fleet Commercial Standard
+   ============================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap');
+
+:root {
+  --bg-topbar: #111822;
+  --bg-rail: #111822;
+  --bg-rail-hover: #1e293b;
+  --border-rail: #243042;
+  --color-teal-accent: #00e5c8;
+
+  --bg-drawer: #ffffff;
+  --text-dark: #0f172a;
+  --text-muted: #64748b;
+  --border-light: #e2e8f0;
+
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-nominal: #10b981;
+  --color-warning: #f59e0b;
+  --color-alarm: #ef4444;
+
+  --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #ffffff;
+  color: var(--text-dark);
+  font-family: var(--font-ui);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 1. TOP ENTERPRISE HEADER BAR (42px) */
+.top-enterprise-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 42px;
+  background: var(--bg-topbar);
+  border-bottom: 2px solid var(--color-teal-accent);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  z-index: 120;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.top-left-section {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.brand-logo-mark {
+  color: var(--color-teal-accent);
+  font-size: 16px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  letter-spacing: 0.5px;
+}
+
+.breadcrumb-pill {
+  background: #1c2533;
+  border: 1px solid #2d3b4e;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.breadcrumb-pill .sep {
+  color: #475569;
+}
+
+.breadcrumb-pill .active-session {
+  color: #f8fafc;
+  font-weight: 600;
+}
+
+.top-right-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.telemetry-tag {
+  background: #1c2533;
+  border: 1px solid #2d3b4e;
+  border-radius: 4px;
+  padding: 3px 8px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.telemetry-tag .dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--color-nominal);
+  display: inline-block;
+  box-shadow: 0 0 6px var(--color-nominal);
+}
+
+.header-icon-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  color: #94a3b8;
+  height: 28px;
+  padding: 0 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+
+.header-icon-btn:hover {
+  background: #1e293b;
+  color: #ffffff;
+  border-color: #334155;
+}
+
+.header-link-pill {
+  background: #1c2533;
+  border: 1px solid #2d3b4e;
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--color-teal-accent);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.header-link-pill:hover {
+  background: #243245;
+  border-color: var(--color-teal-accent);
+  color: #ffffff;
+}
+
+.btn-compact-estop {
+  background: #dc2626;
+  border: 1px solid #ef4444;
+  color: #ffffff;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+
+.btn-compact-estop:hover {
+  background: #b91c1c;
+}
+
+.btn-compact-estop.latched {
+  background: #7f1d1d;
+  animation: estopFlash 0.7s infinite alternate;
+}
+
+@keyframes estopFlash {
+  from { box-shadow: 0 0 3px #ef4444; }
+  to { box-shadow: 0 0 12px #ef4444; }
+}
+
+/* 2. LEFT 48px VERTICAL TOOL RAIL */
+.left-tool-rail {
+  position: absolute;
+  top: 42px;
+  left: 0;
+  bottom: 0;
+  width: 48px;
+  background: var(--bg-rail);
+  border-right: 1px solid var(--border-rail);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 8px 0;
+  gap: 4px;
+  z-index: 110;
+}
+
+.rail-tool-btn {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  color: #94a3b8;
+  font-size: 13.5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  position: relative;
+}
+
+.rail-tool-btn:hover {
+  background: var(--bg-rail-hover);
+  color: #f8fafc;
+}
+
+.rail-tool-btn.active {
+  color: var(--color-teal-accent);
+  background: rgba(0, 229, 200, 0.12);
+  border-color: var(--color-teal-accent);
+}
+
+.rail-badge-text {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.rail-separator {
+  width: 26px;
+  height: 1px;
+  background: var(--border-rail);
+  margin: 4px 0;
+}
+
+/* 3. SLIDE-OUT DISPATCH & STATIONS DRAWER (290px) */
+.dispatch-drawer {
+  position: absolute;
+  top: 42px;
+  left: 48px;
+  bottom: 0;
+  width: 290px;
+  background: var(--bg-drawer);
+  border-right: 1px solid var(--border-light);
+  box-shadow: 4px 0 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  z-index: 105;
+  transition: transform 0.25s ease;
+}
+
+.dispatch-drawer.collapsed {
+  transform: translateX(-100%);
+}
+
+.drawer-header {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+}
+
+.drawer-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-dark);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-drawer-close {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 13px;
+  padding: 2px 6px;
+}
+
+.btn-drawer-close:hover {
+  color: var(--text-dark);
+}
+
+.drawer-mode-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+  margin: 10px 14px 0;
+  background: #f1f5f9;
+  padding: 3px;
+  border-radius: 4px;
+}
+
+.btn-drawer-mode {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 7px 4px;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+
+.btn-drawer-mode.active {
+  background: #ffffff;
+  color: var(--color-primary);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.drawer-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.drawer-pane {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.drawer-pane.active {
+  display: flex;
+}
+
+.btn-drawer-action {
+  width: 100%;
+  height: 38px;
+  background: var(--color-primary);
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  box-shadow: 0 2px 6px rgba(37, 99, 235, 0.3);
+}
+
+.btn-drawer-action:hover {
+  background: var(--color-primary-hover);
+}
+
+.btn-drawer-action.targeting {
+  background: var(--color-warning);
+  animation: pulseTarget 1.2s infinite;
+}
+
+@keyframes pulseTarget {
+  0%, 100% { box-shadow: 0 0 4px #f59e0b; }
+  50% { box-shadow: 0 0 14px #f59e0b; }
+}
+
+.btn-save-slam-map {
+  width: 100%;
+  height: 38px;
+  background: #059669;
+  border: none;
+  border-radius: 4px;
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  box-shadow: 0 2px 6px rgba(5, 150, 105, 0.3);
+}
+
+.btn-save-slam-map:hover {
+  background: #047857;
+}
+
+.drawer-section-label {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.station-row-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  padding: 8px 10px;
+}
+
+.station-badge-code {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 800;
+  background: #e0f2fe;
+  color: #0284c7;
+  padding: 2px 6px;
+  border-radius: 3px;
+}
+
+.station-badge-code.dock {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.station-item-name {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-dark);
+}
+
+.btn-station-dispatch {
+  background: var(--color-primary);
+  border: none;
+  color: #ffffff;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn-station-dispatch:hover {
+  background: var(--color-primary-hover);
+}
+
+.active-mission-card {
+  background: #f8fafc;
+  border: 1px solid var(--border-light);
+  border-left: 3px solid var(--color-primary);
+  border-radius: 4px;
+  padding: 10px;
+  display: none;
+}
+
+.active-mission-card.active {
+  display: block;
+}
+
+.mission-metric-line {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.mission-metric-line strong {
+  color: var(--text-dark);
+}
+
+.mini-keypad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-top: 6px;
+}
+
+.btn-mini-key {
+  height: 36px;
+  background: #f1f5f9;
+  border: 1px solid var(--border-light);
+  border-radius: 4px;
+  color: var(--text-dark);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-mini-key:hover {
+  background: var(--color-primary);
+  color: #ffffff;
+}
+
+.btn-mini-key.stop {
+  background: #fee2e2;
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
+.btn-mini-key.stop:hover {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.drawer-footer {
+  padding: 8px 14px;
+  background: #f8fafc;
+  border-top: 1px solid var(--border-light);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  font-size: 10.5px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+.drawer-footer strong {
+  color: var(--text-dark);
+}
+
+/* 4. FULL-SCREEN 100% VIEWPORT MAP CANVAS */
+#map-canvas {
+  position: absolute;
+  top: 42px;
+  left: 48px;
+  width: calc(100vw - 48px);
+  height: calc(100vh - 42px);
+  display: block;
+  z-index: 1;
+  background: #ffffff;
+  cursor: grab;
+  touch-action: none;
+}
+
+/* 5. TOAST NOTIFICATIONS */
+.toast-container {
+  position: absolute;
+  top: 54px;
+  right: 18px;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.toast {
+  background: #111822;
+  border: 1px solid #2d3b4e;
+  border-left: 3px solid var(--color-teal-accent);
+  border-radius: 4px;
+  padding: 9px 14px;
+  color: #ffffff;
+  font-size: 11.5px;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: toastIn 0.2s ease-out;
+}
+
+.toast.success { border-left-color: var(--color-nominal); }
+.toast.warning { border-left-color: var(--color-warning); }
+.toast.error   { border-left-color: var(--color-alarm); }
+
+@keyframes toastIn {
+  from { transform: translateX(40px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* 6. FLOATING FPV CAMERA HUD (Picture-in-Picture) */
+.camera-pip-widget {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  width: 290px;
+  background: #111822;
+  border: 1px solid #2d3b4e;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  z-index: 100;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  backdrop-filter: blur(10px);
+}
+
+.camera-pip-widget.minimized {
+  width: 230px;
+}
+
+.camera-pip-widget.minimized .camera-pip-body {
+  display: none;
+}
+
+.camera-pip-widget.hidden {
+  display: none;
+}
+
+.camera-pip-header {
+  height: 32px;
+  background: #182232;
+  border-bottom: 1px solid #2d3b4e;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  user-select: none;
+}
+
+.camera-pip-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.camera-pip-title .live-dot {
+  width: 7px;
+  height: 7px;
+  background: #10b981;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 6px #10b981;
+  animation: pulseDot 1.5s infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.4; }
+}
+
+.camera-pip-actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-pip-action {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  cursor: pointer;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 3px;
+  transition: all 0.15s ease;
+}
+
+.btn-pip-action:hover {
+  color: #ffffff;
+  background: #243042;
+}
+
+.camera-pip-body {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background: #0b111c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.camera-pip-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.camera-pip-overlay {
+  position: absolute;
+  bottom: 6px;
+  left: 8px;
+  right: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
+  pointer-events: none;
+}
+  </style>
+</head>
+<body>
+
+  <!-- ==================== 1. TOP ENTERPRISE HEADER BAR (42px) ==================== -->
+  <header class="top-enterprise-bar">
+    <div class="top-left-section">
+      <div class="brand-logo-mark">
+        <i class="fa-solid fa-bolt-lightning"></i>
+        <span>LOGIX</span>
+      </div>
+      <div class="breadcrumb-pill">
+        <span>Home</span>
+        <span class="sep">/</span>
+        <span>Live Environment Server</span>
+        <span class="sep">/</span>
+        <span>Monitoring</span>
+        <span class="sep">/</span>
+        <span class="active-session">38dbada8-6b39-42d0-b00d-5a2228c97267</span>
+      </div>
+    </div>
+
+    <div class="top-right-section">
+      <div class="telemetry-tag">
+        <span class="dot"></span>
+        <span id="top-conn-tag">ONLINE (20 Hz)</span>
+      </div>
+      <a href="/mapping.html" class="header-link-pill" title="Mühendislik / Harita Tarama (SLAM) Sayfası">
+        <i class="fa-solid fa-map-location-dot"></i>
+        <span>Harita Editörü (SLAM)</span>
+      </a>
+      <button id="btn-top-estop" class="btn-compact-estop" title="Endüstriyel Acil Stop (E-Stop)">
+        <i class="fa-solid fa-octagon-exclamation"></i> E-STOP
+      </button>
+      <button id="btn-top-lang" class="header-icon-btn">EN</button>
+      <button id="btn-top-fullscreen" class="header-icon-btn" title="Tam Ekran">
+        <i class="fa-solid fa-expand"></i>
+      </button>
+      <button id="btn-top-menu" class="header-icon-btn">
+        <i class="fa-solid fa-ellipsis-vertical"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== 2. LEFT 48px VERTICAL TOOL RAIL ==================== -->
+  <nav class="left-tool-rail">
+    <!-- Route / Missions Drawer Toggle -->
+    <button id="btn-rail-route" class="rail-tool-btn active" title="Görev ve Sefer Planlayıcı">
+      <i class="fa-solid fa-diamond-turn-right"></i>
+    </button>
+    <!-- 2D Nav Goal Tool -->
+    <button id="btn-rail-goal" class="rail-tool-btn" title="Haritadan Hedef Belirle (2D Nav Goal)">
+      <i class="fa-solid fa-bullseye"></i>
+    </button>
+    <!-- Stations & Waypoints Drawer -->
+    <button id="btn-rail-stations" class="rail-tool-btn" title="Kayıtlı İstasyonlar">
+      <i class="fa-solid fa-flag"></i>
+    </button>
+    <!-- Virtual Forbidden Zones Toggle -->
+    <button id="btn-rail-zones" class="rail-tool-btn active" title="Yasak Bölge (No-Go) Çizgileri & ⊘ İşaretleri">
+      <i class="fa-solid fa-ban"></i>
+    </button>
+    <!-- CAD Grid Toggle -->
+    <button id="btn-rail-grid" class="rail-tool-btn active" title="CAD Metrik Izgara Aç/Kapa">
+      <i class="fa-solid fa-table-cells"></i>
+    </button>
+    <!-- LiDAR Sensor Returns & Safety Field Toggle -->
+    <button id="btn-rail-lidar" class="rail-tool-btn active" title="Lazer Tarama Noktaları & Güvenlik Alanı">
+      <i class="fa-solid fa-tower-broadcast"></i>
+    </button>
+    <!-- Live FPV Camera Stream Toggle -->
+    <button id="btn-rail-camera" class="rail-tool-btn active" title="Robot Ön Kamerası (RealSense Canlı Yayın)">
+      <i class="fa-solid fa-video"></i>
+    </button>
+    <!-- 2D / Top-Down CAD View -->
+    <button id="btn-rail-2d" class="rail-tool-btn" title="2D / 3D CAD Görünümü">
+      <span class="rail-badge-text">2D</span>
+    </button>
+
+    <div class="rail-separator"></div>
+
+    <!-- Zoom In -->
+    <button id="btn-rail-zoomin" class="rail-tool-btn" title="Yakınlaştır (+)">
+      <i class="fa-solid fa-plus"></i>
+    </button>
+    <!-- Zoom Out -->
+    <button id="btn-rail-zoomout" class="rail-tool-btn" title="Uzaklaştır (-)">
+      <i class="fa-solid fa-minus"></i>
+    </button>
+    <!-- Follow Robot -->
+    <button id="btn-rail-recenter" class="rail-tool-btn" title="Robota Odaklan">
+      <i class="fa-solid fa-location-crosshairs"></i>
+    </button>
+    <!-- Fit Arena -->
+    <button id="btn-rail-fit" class="rail-tool-btn" title="Tüm Sahayı Ekrana Sığdır">
+      <i class="fa-solid fa-arrows-to-dot"></i>
+    </button>
+  </nav>
+
+  <!-- ==================== 3. SLIDE-OUT DISPATCH DRAWER (290px) ==================== -->
+  <aside id="dispatch-drawer" class="dispatch-drawer">
+    <div class="drawer-header">
+      <div class="drawer-title">
+        <i class="fa-solid fa-sliders" style="color: var(--color-primary);"></i>
+        <span>SEVKİYAT KONSOLU</span>
+      </div>
+      <button id="btn-close-drawer" class="btn-drawer-close" title="Paneli Kapat">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- Autonomous Goal Button -->
+      <button id="btn-pick-goal" class="btn-drawer-action">
+        <i class="fa-solid fa-location-crosshairs"></i> HARİTADAN HEDEF SEÇ
+      </button>
+
+      <!-- Active Mission HUD Card -->
+      <div id="nav-mission-box" class="active-mission-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+          <div style="font-size: 11px; font-weight: 700; color: var(--color-primary); display: flex; align-items: center; gap: 6px;">
+            <i class="fa-solid fa-circle-notch fa-spin"></i> SEFER SÜRÜYOR
+          </div>
+          <button id="btn-cancel-mission" style="background: transparent; border: none; color: var(--color-alarm); font-size: 10px; font-weight: 700; cursor: pointer;">
+            İPTAL
+          </button>
+        </div>
+        <div class="mission-metric-line">
+          <span>Kalan Mesafe:</span>
+          <strong id="nav-dist-val">0.00 m</strong>
+        </div>
+        <div class="mission-metric-line">
+          <span>Tahmini Varış:</span>
+          <strong id="nav-eta-val">0 sn</strong>
+        </div>
+      </div>
+
+      <!-- Registered Stations List -->
+      <div>
+        <div class="drawer-section-label">
+          <span>Kayıtlı İstasyonlar</span>
+          <button id="btn-add-station" style="background: transparent; border: none; color: var(--color-primary); font-size: 11px; cursor: pointer;">
+            <i class="fa-solid fa-plus"></i> Konum Ekle
+          </button>
+        </div>
+        <div id="stations-list-container" style="display: flex; flex-direction: column; gap: 6px; margin-top: 6px;">
+          <!-- Rendered by JS -->
+        </div>
+      </div>
+
+      <!-- Manuel Hassas Yanaşma Konsolu (Micro-Teleop) -->
+      <div style="margin-top: 8px;">
+        <div class="drawer-section-label">Manuel Hassas Yanaşma (Teleop)</div>
+        <div class="mini-keypad-grid">
+          <div></div>
+          <button class="btn-mini-key" data-dir="forward" title="İleri [W]"><i class="fa-solid fa-arrow-up"></i></button>
+          <div></div>
+
+          <button class="btn-mini-key" data-dir="left" title="Sol [A]"><i class="fa-solid fa-arrow-left"></i></button>
+          <button class="btn-mini-key stop" data-dir="stop" title="Fren [Boşluk]"><i class="fa-solid fa-hand"></i></button>
+          <button class="btn-mini-key" data-dir="right" title="Sağ [D]"><i class="fa-solid fa-arrow-right"></i></button>
+
+          <div></div>
+          <button class="btn-mini-key" data-dir="backward" title="Geri [S]"><i class="fa-solid fa-arrow-down"></i></button>
+          <div></div>
+        </div>
+
+        <!-- Speed Presets -->
+        <div style="display: flex; gap: 4px; margin-top: 8px;">
+          <button class="btn-speed-pill active" data-speed="0.2" style="flex:1; padding:4px; font-size:10px; border:1px solid var(--border-light); border-radius:3px; cursor:pointer;">0.2 m/s</button>
+          <button class="btn-speed-pill" data-speed="0.4" style="flex:1; padding:4px; font-size:10px; border:1px solid var(--border-light); border-radius:3px; cursor:pointer;">0.4 m/s</button>
+          <button class="btn-speed-pill" data-speed="0.8" style="flex:1; padding:4px; font-size:10px; border:1px solid var(--border-light); border-radius:3px; cursor:pointer;">0.8 m/s</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drawer Telemetry Footer -->
+    <div class="drawer-footer">
+      <div>Hız: <strong id="foot-speed">0.00 m/s</strong></div>
+      <div>AMCL: <strong id="foot-amcl" style="color: var(--color-nominal);">KİLİTLİ</strong></div>
+      <div>Güç: <strong id="foot-battery" style="color: var(--color-nominal);">%98</strong></div>
+      <div>Link: <strong id="foot-conn" style="color: var(--color-nominal);">ONLINE</strong></div>
+    </div>
+  </aside>
+
+  <!-- ==================== 4. FULL-SCREEN 100% CAD CANVAS ==================== -->
+  <canvas id="map-canvas"></canvas>
+
+  <!-- ==================== 5. TOAST NOTIFICATION CONTAINER ==================== -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- ==================== 6. FLOATING FPV CAMERA HUD (Picture-in-Picture) ==================== -->
+  <div id="camera-pip-widget" class="camera-pip-widget">
+    <div class="camera-pip-header">
+      <div class="camera-pip-title">
+        <span class="live-dot"></span>
+        <span>KAMERA (RealSense)</span>
+      </div>
+      <div class="camera-pip-actions">
+        <button id="btn-pip-minimize" class="btn-pip-action" title="Küçült / Büyüt">
+          <i class="fa-solid fa-minus"></i>
+        </button>
+        <button id="btn-pip-close" class="btn-pip-action" title="Kapat">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+    <div class="camera-pip-body">
+      <img id="camera-stream-img" class="camera-pip-img" src="/api/camera/stream" alt="Robot Ön Kamerası">
+      <div class="camera-pip-overlay">
+        <span><i class="fa-solid fa-circle" style="color:#10b981; font-size:7px;"></i> CANLI (15 FPS)</span>
+        <span>320x240</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client JavaScript -->
+  <script src="/js/audio.js?v=20260910_clean_scada_v9"></script>
+  <script src="/js/map_viewer.js?v=20260910_clean_scada_v9"></script>
+  <script src="/js/app.js?v=20260910_clean_scada_v9"></script>
+</body>
+</html>

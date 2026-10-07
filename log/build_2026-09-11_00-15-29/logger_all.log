@@ -1,0 +1,152 @@
+[0.110s] colcon DEBUG Command line arguments: ['/usr/bin/colcon', 'build', '--packages-select', 'ackermann_car_sim', '--cmake-args', '-DCMAKE_BUILD_TYPE=Release']
+[0.110s] colcon DEBUG Parsed command line arguments: Namespace(log_base=None, log_level=None, verb_name='build', build_base='build', install_base='install', merge_install=False, symlink_install=False, test_result_base=None, continue_on_error=False, executor='parallel', parallel_workers=16, event_handlers=None, ignore_user_meta=False, metas=['./colcon.meta'], base_paths=['.'], packages_ignore=None, packages_ignore_regex=None, paths=None, packages_up_to=None, packages_up_to_regex=None, packages_above=None, packages_above_and_dependencies=None, packages_above_depth=None, packages_select_by_dep=None, packages_skip_by_dep=None, packages_skip_up_to=None, packages_select_build_failed=False, packages_skip_build_finished=False, packages_select_test_failures=False, packages_skip_test_passed=False, packages_select=['ackermann_car_sim'], packages_skip=None, packages_select_regex=None, packages_skip_regex=None, packages_start=None, packages_end=None, allow_overriding=[], cmake_args=['-DCMAKE_BUILD_TYPE=Release'], cmake_target=None, cmake_target_skip_unavailable=False, cmake_clean_cache=False, cmake_clean_first=False, cmake_force_configure=False, ament_cmake_args=None, catkin_cmake_args=None, catkin_skip_building_tests=False, verb_parser=<colcon_defaults.argument_parser.defaults.DefaultArgumentsDecorator object at 0x7a8e3af21e70>, verb_extension=<colcon_core.verb.build.BuildVerb object at 0x7a8e3af21870>, main=<bound method BuildVerb.main of <colcon_core.verb.build.BuildVerb object at 0x7a8e3af21870>>)
+[0.156s] colcon.colcon_core.package_discovery Level 1 discover_packages(colcon_meta) check parameters
+[0.156s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) check parameters
+[0.156s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) check parameters
+[0.156s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) check parameters
+[0.156s] colcon.colcon_core.package_discovery Level 1 discover_packages(colcon_meta) discover
+[0.157s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) discover
+[0.157s] colcon.colcon_core.package_discovery INFO Crawling recursively for packages in '/home/ibrahim/Desktop/Navigation'
+[0.157s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['ignore', 'ignore_ament_install']
+[0.157s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ignore'
+[0.157s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ignore_ament_install'
+[0.157s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['colcon_pkg']
+[0.157s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'colcon_pkg'
+[0.157s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['colcon_meta']
+[0.157s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'colcon_meta'
+[0.157s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['ros']
+[0.157s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'ros'
+[0.170s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['cmake', 'python']
+[0.170s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'cmake'
+[0.170s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'python'
+[0.170s] colcon.colcon_core.package_identification Level 1 _identify(.) by extensions ['python_setup_py']
+[0.170s] colcon.colcon_core.package_identification Level 1 _identify(.) by extension 'python_setup_py'
+[0.170s] colcon.colcon_core.package_identification Level 1 _identify(build) by extensions ['ignore', 'ignore_ament_install']
+[0.170s] colcon.colcon_core.package_identification Level 1 _identify(build) by extension 'ignore'
+[0.170s] colcon.colcon_core.package_identification Level 1 _identify(build) ignored
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(install) by extensions ['ignore', 'ignore_ament_install']
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(install) by extension 'ignore'
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(install) ignored
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(log) by extensions ['ignore', 'ignore_ament_install']
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(log) by extension 'ignore'
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(log) ignored
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['ignore', 'ignore_ament_install']
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'ignore'
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'ignore_ament_install'
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['colcon_pkg']
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'colcon_pkg'
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['colcon_meta']
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'colcon_meta'
+[0.171s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['ros']
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'ros'
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['cmake', 'python']
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'cmake'
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'python'
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src) by extensions ['python_setup_py']
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src) by extension 'python_setup_py'
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src/ackermann_car_sim) by extensions ['ignore', 'ignore_ament_install']
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src/ackermann_car_sim) by extension 'ignore'
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src/ackermann_car_sim) by extension 'ignore_ament_install'
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src/ackermann_car_sim) by extensions ['colcon_pkg']
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src/ackermann_car_sim) by extension 'colcon_pkg'
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src/ackermann_car_sim) by extensions ['colcon_meta']
+[0.172s] colcon.colcon_core.package_identification Level 1 _identify(src/ackermann_car_sim) by extension 'colcon_meta'
+[0.173s] colcon.colcon_core.package_identification Level 1 _identify(src/ackermann_car_sim) by extensions ['ros']
+[0.173s] colcon.colcon_core.package_identification Level 1 _identify(src/ackermann_car_sim) by extension 'ros'
+[0.176s] colcon.colcon_core.package_identification DEBUG Package 'src/ackermann_car_sim' with type 'ros.ament_cmake' and name 'ackermann_car_sim'
+[0.176s] colcon.colcon_core.package_identification Level 1 _identify(src/rf2o_laser_odometry) by extensions ['ignore', 'ignore_ament_install']
+[0.176s] colcon.colcon_core.package_identification Level 1 _identify(src/rf2o_laser_odometry) by extension 'ignore'
+[0.177s] colcon.colcon_core.package_identification Level 1 _identify(src/rf2o_laser_odometry) by extension 'ignore_ament_install'
+[0.177s] colcon.colcon_core.package_identification Level 1 _identify(src/rf2o_laser_odometry) by extensions ['colcon_pkg']
+[0.177s] colcon.colcon_core.package_identification Level 1 _identify(src/rf2o_laser_odometry) by extension 'colcon_pkg'
+[0.177s] colcon.colcon_core.package_identification Level 1 _identify(src/rf2o_laser_odometry) by extensions ['colcon_meta']
+[0.177s] colcon.colcon_core.package_identification Level 1 _identify(src/rf2o_laser_odometry) by extension 'colcon_meta'
+[0.177s] colcon.colcon_core.package_identification Level 1 _identify(src/rf2o_laser_odometry) by extensions ['ros']
+[0.177s] colcon.colcon_core.package_identification Level 1 _identify(src/rf2o_laser_odometry) by extension 'ros'
+[0.179s] colcon.colcon_core.package_identification DEBUG Package 'src/rf2o_laser_odometry' with type 'ros.ament_cmake' and name 'rf2o_laser_odometry'
+[0.179s] colcon.colcon_core.package_discovery Level 1 discover_packages(recursive) using defaults
+[0.179s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) discover
+[0.179s] colcon.colcon_core.package_discovery Level 1 discover_packages(ignore) using defaults
+[0.179s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) discover
+[0.179s] colcon.colcon_core.package_discovery Level 1 discover_packages(path) using defaults
+[0.193s] colcon.colcon_core.package_selection INFO Skipping not selected package 'rf2o_laser_odometry' in 'src/rf2o_laser_odometry'
+[0.194s] colcon.colcon_core.package_discovery Level 1 discover_packages(prefix_path) check parameters
+[0.194s] colcon.colcon_core.package_discovery Level 1 discover_packages(prefix_path) discover
+[0.195s] colcon.colcon_installed_package_information.package_discovery DEBUG Found 4 installed packages in /home/ibrahim/ardu_ws/install
+[0.197s] colcon.colcon_installed_package_information.package_discovery DEBUG Found 454 installed packages in /opt/ros/humble
+[0.198s] colcon.colcon_core.package_discovery Level 1 discover_packages(prefix_path) using defaults
+[0.263s] colcon.colcon_core.verb Level 5 set package 'ackermann_car_sim' build argument 'cmake_args' from command line to '['-DCMAKE_BUILD_TYPE=Release']'
+[0.263s] colcon.colcon_core.verb Level 5 set package 'ackermann_car_sim' build argument 'cmake_target' from command line to 'None'
+[0.263s] colcon.colcon_core.verb Level 5 set package 'ackermann_car_sim' build argument 'cmake_target_skip_unavailable' from command line to 'False'
+[0.263s] colcon.colcon_core.verb Level 5 set package 'ackermann_car_sim' build argument 'cmake_clean_cache' from command line to 'False'
+[0.263s] colcon.colcon_core.verb Level 5 set package 'ackermann_car_sim' build argument 'cmake_clean_first' from command line to 'False'
+[0.263s] colcon.colcon_core.verb Level 5 set package 'ackermann_car_sim' build argument 'cmake_force_configure' from command line to 'False'
+[0.263s] colcon.colcon_core.verb Level 5 set package 'ackermann_car_sim' build argument 'ament_cmake_args' from command line to 'None'
+[0.263s] colcon.colcon_core.verb Level 5 set package 'ackermann_car_sim' build argument 'catkin_cmake_args' from command line to 'None'
+[0.263s] colcon.colcon_core.verb Level 5 set package 'ackermann_car_sim' build argument 'catkin_skip_building_tests' from command line to 'False'
+[0.263s] colcon.colcon_core.verb DEBUG Building package 'ackermann_car_sim' with the following arguments: {'ament_cmake_args': None, 'build_base': '/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim', 'catkin_cmake_args': None, 'catkin_skip_building_tests': False, 'cmake_args': ['-DCMAKE_BUILD_TYPE=Release'], 'cmake_clean_cache': False, 'cmake_clean_first': False, 'cmake_force_configure': False, 'cmake_target': None, 'cmake_target_skip_unavailable': False, 'install_base': '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim', 'merge_install': False, 'path': '/home/ibrahim/Desktop/Navigation/src/ackermann_car_sim', 'symlink_install': False, 'test_result_base': None}
+[0.264s] colcon.colcon_core.executor INFO Executing jobs using 'parallel' executor
+[0.264s] colcon.colcon_parallel_executor.executor.parallel DEBUG run_until_complete
+[0.265s] colcon.colcon_ros.task.ament_cmake.build INFO Building ROS package in '/home/ibrahim/Desktop/Navigation/src/ackermann_car_sim' with build type 'ament_cmake'
+[0.265s] colcon.colcon_cmake.task.cmake.build INFO Building CMake package in '/home/ibrahim/Desktop/Navigation/src/ackermann_car_sim'
+[0.267s] colcon.colcon_core.plugin_system INFO Skipping extension 'colcon_core.shell.bat': Not used on non-Windows systems
+[0.267s] colcon.colcon_core.shell INFO Skip shell extension 'powershell' for command environment: Not usable outside of PowerShell
+[0.267s] colcon.colcon_core.shell DEBUG Skip shell extension 'dsv' for command environment
+[0.278s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim': AMENT_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake /home/ibrahim/Desktop/Navigation/src/ackermann_car_sim -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim
+[0.524s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim' returned '0': AMENT_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake /home/ibrahim/Desktop/Navigation/src/ackermann_car_sim -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim
+[0.526s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim': AMENT_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/Desktop/Navigation/build/ackermann_car_sim -- -j16 -l16
+[0.568s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim' returned '0': AMENT_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --build /home/ibrahim/Desktop/Navigation/build/ackermann_car_sim -- -j16 -l16
+[0.580s] colcon.colcon_core.event_handler.log_command DEBUG Invoking command in '/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim': AMENT_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/Desktop/Navigation/build/ackermann_car_sim
+[0.601s] colcon.colcon_core.environment Level 1 create_environment_scripts_only(ackermann_car_sim)
+[0.601s] colcon.colcon_core.event_handler.log_command DEBUG Invoked command in '/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim' returned '0': AMENT_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:${AMENT_PREFIX_PATH} CMAKE_PREFIX_PATH=/home/ibrahim/Desktop/Navigation/install/rf2o_laser_odometry:/home/ibrahim/ardu_ws/install/ardupilot_sitl:/home/ibrahim/ardu_ws/install/micro_ros_agent:/home/ibrahim/ardu_ws/install/ardupilot_msgs:/home/ibrahim/ardu_ws/install/ardupilot_dds_tests:/opt/ros/humble /usr/bin/cmake --install /home/ibrahim/Desktop/Navigation/build/ackermann_car_sim
+[0.604s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim' for CMake module files
+[0.605s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim' for CMake config files
+[0.605s] colcon.colcon_core.shell Level 1 create_environment_hook('ackermann_car_sim', 'cmake_prefix_path')
+[0.605s] colcon.colcon_core.shell INFO Creating environment hook '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/hook/cmake_prefix_path.ps1'
+[0.606s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/hook/cmake_prefix_path.dsv'
+[0.606s] colcon.colcon_core.shell INFO Creating environment hook '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/hook/cmake_prefix_path.sh'
+[0.607s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/bin'
+[0.607s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/lib/pkgconfig/ackermann_car_sim.pc'
+[0.608s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/lib/python3.10/site-packages'
+[0.608s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/bin'
+[0.608s] colcon.colcon_core.shell INFO Creating package script '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.ps1'
+[0.609s] colcon.colcon_core.shell INFO Creating package descriptor '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.dsv'
+[0.610s] colcon.colcon_core.shell INFO Creating package script '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.sh'
+[0.610s] colcon.colcon_core.shell INFO Creating package script '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.bash'
+[0.611s] colcon.colcon_core.shell INFO Creating package script '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.zsh'
+[0.612s] colcon.colcon_core.environment Level 1 create_file_with_runtime_dependencies(/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/colcon-core/packages/ackermann_car_sim)
+[0.613s] colcon.colcon_core.environment Level 1 create_environment_scripts_only(ackermann_car_sim)
+[0.613s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim' for CMake module files
+[0.614s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim' for CMake config files
+[0.615s] colcon.colcon_core.shell Level 1 create_environment_hook('ackermann_car_sim', 'cmake_prefix_path')
+[0.615s] colcon.colcon_core.shell INFO Creating environment hook '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/hook/cmake_prefix_path.ps1'
+[0.616s] colcon.colcon_core.shell INFO Creating environment descriptor '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/hook/cmake_prefix_path.dsv'
+[0.616s] colcon.colcon_core.shell INFO Creating environment hook '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/hook/cmake_prefix_path.sh'
+[0.617s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/bin'
+[0.617s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/lib/pkgconfig/ackermann_car_sim.pc'
+[0.617s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/lib/python3.10/site-packages'
+[0.618s] colcon.colcon_core.environment Level 1 checking '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/bin'
+[0.618s] colcon.colcon_core.shell INFO Creating package script '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.ps1'
+[0.619s] colcon.colcon_core.shell INFO Creating package descriptor '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.dsv'
+[0.620s] colcon.colcon_core.shell INFO Creating package script '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.sh'
+[0.621s] colcon.colcon_core.shell INFO Creating package script '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.bash'
+[0.622s] colcon.colcon_core.shell INFO Creating package script '/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/ackermann_car_sim/package.zsh'
+[0.622s] colcon.colcon_core.environment Level 1 create_file_with_runtime_dependencies(/home/ibrahim/Desktop/Navigation/install/ackermann_car_sim/share/colcon-core/packages/ackermann_car_sim)
+[0.623s] colcon.colcon_parallel_executor.executor.parallel DEBUG closing loop
+[0.623s] colcon.colcon_parallel_executor.executor.parallel DEBUG loop closed
+[0.623s] colcon.colcon_parallel_executor.executor.parallel DEBUG run_until_complete finished with '0'
+[0.623s] colcon.colcon_core.event_reactor DEBUG joining thread
+[0.627s] colcon.colcon_core.plugin_system INFO Skipping extension 'colcon_notification.desktop_notification.terminal_notifier': Not used on non-Darwin systems
+[0.628s] colcon.colcon_core.plugin_system INFO Skipping extension 'colcon_notification.desktop_notification.win32': Not used on non-Windows systems
+[0.628s] colcon.colcon_notification.desktop_notification INFO Sending desktop notification using 'notify2'
+[0.643s] colcon.colcon_core.event_reactor DEBUG joined thread
+[0.644s] colcon.colcon_core.shell INFO Creating prefix script '/home/ibrahim/Desktop/Navigation/install/local_setup.ps1'
+[0.645s] colcon.colcon_core.shell INFO Creating prefix util module '/home/ibrahim/Desktop/Navigation/install/_local_setup_util_ps1.py'
+[0.647s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/ibrahim/Desktop/Navigation/install/setup.ps1'
+[0.649s] colcon.colcon_core.shell INFO Creating prefix script '/home/ibrahim/Desktop/Navigation/install/local_setup.sh'
+[0.649s] colcon.colcon_core.shell INFO Creating prefix util module '/home/ibrahim/Desktop/Navigation/install/_local_setup_util_sh.py'
+[0.650s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/ibrahim/Desktop/Navigation/install/setup.sh'
+[0.652s] colcon.colcon_core.shell INFO Creating prefix script '/home/ibrahim/Desktop/Navigation/install/local_setup.bash'
+[0.652s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/ibrahim/Desktop/Navigation/install/setup.bash'
+[0.653s] colcon.colcon_core.shell INFO Creating prefix script '/home/ibrahim/Desktop/Navigation/install/local_setup.zsh'
+[0.654s] colcon.colcon_core.shell INFO Creating prefix chain script '/home/ibrahim/Desktop/Navigation/install/setup.zsh'

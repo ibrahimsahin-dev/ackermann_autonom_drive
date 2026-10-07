@@ -1,0 +1,1 @@
+/home/ibrahim/Desktop/Navigation/build/ackermann_car_sim/ament_cmake_environment_hooks/local_setup.sh

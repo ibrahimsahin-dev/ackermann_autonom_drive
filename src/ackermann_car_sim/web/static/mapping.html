@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>LOGIX AMR | Harita Çıkarma & SLAM Yönetim İstasyonu</title>
+  
+  <!-- Font Awesome 6 Pro Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/style.css?v=20260910_clean_scada_v9">
+
+  <style>
+    /* Top Enterprise Header Bar */
+    .top-enterprise-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 42px;
+      background: #111822;
+      border-bottom: 2px solid #f59e0b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 14px;
+      z-index: 120;
+    }
+
+    .brand-logo-mark {
+      color: #f59e0b;
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .nav-back-link {
+      background: #1c2533;
+      border: 1px solid #2d3b4e;
+      border-radius: 4px;
+      padding: 5px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #f8fafc;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .nav-back-link:hover {
+      background: #2563eb;
+      border-color: #2563eb;
+      color: #ffffff;
+    }
+
+    /* Floating SLAM Control HUD */
+    .slam-hud-panel {
+      position: absolute;
+      top: 56px;
+      left: 64px;
+      width: 320px;
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+      z-index: 110;
+      overflow: hidden;
+    }
+
+    .slam-hud-header {
+      background: #111822;
+      color: #ffffff;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 2px solid #f59e0b;
+    }
+
+    .slam-hud-body {
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .btn-save-slam-permanent {
+      width: 100%;
+      height: 42px;
+      background: #10b981;
+      border: none;
+      border-radius: 4px;
+      color: #ffffff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s ease;
+    }
+
+    .btn-save-slam-permanent:hover {
+      background: #059669;
+    }
+
+    /* Left 48px rail */
+    .left-tool-rail {
+      position: absolute;
+      top: 42px;
+      left: 0;
+      bottom: 0;
+      width: 48px;
+      background: #111822;
+      border-right: 1px solid #243042;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px 0;
+      gap: 8px;
+      z-index: 100;
+    }
+
+    #map-canvas {
+      position: absolute;
+      top: 42px;
+      left: 48px;
+      width: calc(100vw - 48px);
+      height: calc(100vh - 42px);
+      display: block;
+      z-index: 1;
+      background: #ffffff;
+      cursor: grab;
+      touch-action: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Enterprise Bar -->
+  <header class="top-enterprise-bar">
+    <div style="display: flex; align-items: center; gap: 14px;">
+      <div class="brand-logo-mark">
+        <i class="fa-solid fa-map"></i>
+        <span>LOGIX AMR | SLAM HARİTA EDİTÖRÜ</span>
+      </div>
+      <span style="font-family: var(--font-mono); font-size: 11px; color: #94a3b8; background: #1c2533; padding: 3px 8px; border-radius: 3px;">
+        Mühendislik Paneli (İzole Mod)
+      </span>
+    </div>
+
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <a href="/" class="nav-back-link">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Otonom Sevkiyat Paneline Dön</span>
+      </a>
+      <div class="telemetry-tag">
+        <span class="dot" style="background: #f59e0b; box-shadow: 0 0 6px #f59e0b;"></span>
+        <span id="top-conn-tag">SLAM CANLI (20 Hz)</span>
+      </div>
+      <button id="btn-top-estop" class="btn-compact-estop" title="Acil Stop">
+        <i class="fa-solid fa-octagon-exclamation"></i> E-STOP
+      </button>
+    </div>
+  </header>
+
+  <!-- Left 48px Tool Rail -->
+  <nav class="left-tool-rail">
+    <button id="btn-rail-grid" class="rail-tool-btn active" title="CAD Izgara Aç/Kapa">
+      <i class="fa-solid fa-table-cells"></i>
+    </button>
+    <button id="btn-rail-lidar" class="rail-tool-btn active" title="Lazer Noktaları & Konisi">
+      <i class="fa-solid fa-tower-broadcast"></i>
+    </button>
+    <button id="btn-rail-camera" class="rail-tool-btn active" title="Kamera Akışı">
+      <i class="fa-solid fa-video"></i>
+    </button>
+    <div class="rail-separator"></div>
+    <button id="btn-rail-zoomin" class="rail-tool-btn" title="Yakınlaştır (+)">
+      <i class="fa-solid fa-plus"></i>
+    </button>
+    <button id="btn-rail-zoomout" class="rail-tool-btn" title="Uzaklaştır (-)">
+      <i class="fa-solid fa-minus"></i>
+    </button>
+    <button id="btn-rail-recenter" class="rail-tool-btn" title="Robota Odaklan">
+      <i class="fa-solid fa-location-crosshairs"></i>
+    </button>
+    <button id="btn-rail-fit" class="rail-tool-btn" title="Sahayı Sığdır">
+      <i class="fa-solid fa-arrows-to-dot"></i>
+    </button>
+  </nav>
+
+  <!-- Floating Dedicated SLAM HUD -->
+  <aside class="slam-hud-panel">
+    <div class="slam-hud-header">
+      <span>HARİTA ÇIKARMA YÖNETİMİ</span>
+      <span style="font-family: var(--font-mono); font-size: 10px; color: #f59e0b;">SLAM_TOOLBOX</span>
+    </div>
+
+    <div class="slam-hud-body">
+      <div style="font-size: 11px; color: var(--text-muted); line-height: 1.4;">
+        Robotu klavye (W/A/S/D) veya aşağıdaki tuşlarla fabrikada sürün. Tarama tamamlandığında tek tuşla kaydedin.
+      </div>
+
+      <!-- One-Click Save Map -->
+      <button id="btn-save-map" class="btn-save-slam-permanent">
+        <i class="fa-solid fa-floppy-disk"></i> HARİTAYI KAYDET VE UYGULA
+      </button>
+
+      <!-- Teleop Keypad -->
+      <div>
+        <div style="font-size: 11px; font-weight: 700; color: #0f172a; margin-bottom: 6px;">Manuel Sürüş Konsolu</div>
+        <div class="mini-keypad-grid">
+          <div></div>
+          <button class="btn-mini-key" data-dir="forward" title="İleri [W]"><i class="fa-solid fa-arrow-up"></i></button>
+          <div></div>
+
+          <button class="btn-mini-key" data-dir="left" title="Sol [A]"><i class="fa-solid fa-arrow-left"></i></button>
+          <button class="btn-mini-key stop" data-dir="stop" title="Fren [Boşluk]"><i class="fa-solid fa-hand"></i></button>
+          <button class="btn-mini-key" data-dir="right" title="Sağ [D]"><i class="fa-solid fa-arrow-right"></i></button>
+
+          <div></div>
+          <button class="btn-mini-key" data-dir="backward" title="Geri [S]"><i class="fa-solid fa-arrow-down"></i></button>
+          <div></div>
+        </div>
+
+        <!-- Speed Presets -->
+        <div style="display: flex; gap: 4px; margin-top: 8px;">
+          <button class="btn-speed-pill active" data-speed="0.2" style="flex:1; padding:4px; font-size:10px; border:1px solid var(--border-light); border-radius:3px; cursor:pointer;">0.2 m/s</button>
+          <button class="btn-speed-pill" data-speed="0.4" style="flex:1; padding:4px; font-size:10px; border:1px solid var(--border-light); border-radius:3px; cursor:pointer;">0.4 m/s</button>
+          <button class="btn-speed-pill" data-speed="0.8" style="flex:1; padding:4px; font-size:10px; border:1px solid var(--border-light); border-radius:3px; cursor:pointer;">0.8 m/s</button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Full-Screen 100% CAD Canvas -->
+  <canvas id="map-canvas"></canvas>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Floating Camera PiP -->
+  <div id="camera-pip-widget" class="camera-pip-widget">
+    <div class="camera-pip-header">
+      <div class="camera-pip-title">
+        <span class="live-dot"></span>
+        <span>KAMERA (RealSense)</span>
+      </div>
+      <div class="camera-pip-actions">
+        <button id="btn-pip-minimize" class="btn-pip-action" title="Küçült / Büyüt"><i class="fa-solid fa-minus"></i></button>
+        <button id="btn-pip-close" class="btn-pip-action" title="Kapat"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+    </div>
+    <div class="camera-pip-body">
+      <img id="camera-stream-img" class="camera-pip-img" src="/api/camera/stream" alt="Robot Ön Kamerası">
+      <div class="camera-pip-overlay">
+        <span><i class="fa-solid fa-circle" style="color:#10b981; font-size:7px;"></i> CANLI (15 FPS)</span>
+        <span>320x240</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Client JavaScript -->
+  <script src="/js/audio.js?v=20260910_clean_scada_v9"></script>
+  <script src="/js/map_viewer.js?v=20260910_clean_scada_v9"></script>
+  <script src="/js/app.js?v=20260910_clean_scada_v9"></script>
+</body>
+</html>
