@@ -678,3 +678,153 @@ html, body {
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.9);
   pointer-events: none;
 }
+
+/* ==============================================================================
+   7. FLOATING ACKERMANN TELEOP CONTROL BAR
+   ============================================================================== */
+.floating-teleop-dock {
+  position: absolute;
+  bottom: 24px;
+  left: 64px;
+  background: rgba(17, 24, 34, 0.95);
+  border: 1px solid #2d3b4e;
+  border-left: 3px solid var(--color-teal-accent);
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  z-index: 95;
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  backdrop-filter: blur(12px);
+  user-select: none;
+  transition: all 0.2s ease;
+}
+
+.floating-teleop-dock.minimized {
+  padding: 6px 12px;
+}
+
+.floating-teleop-dock.minimized .teleop-dock-content {
+  display: none;
+}
+
+.teleop-dock-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.teleop-dock-title {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 800;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.teleop-dock-badge {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(0, 229, 200, 0.15);
+  color: var(--color-teal-accent);
+  border: 1px solid rgba(0, 229, 200, 0.3);
+}
+
+.teleop-dock-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.teleop-keypad-9 {
+  display: grid;
+  grid-template-columns: repeat(3, 34px);
+  gap: 4px;
+}
+
+.btn-teleop-key {
+  height: 32px;
+  width: 34px;
+  background: #1c2533;
+  border: 1px solid #2d3b4e;
+  border-radius: 4px;
+  color: #e2e8f0;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease;
+}
+
+.btn-teleop-key:hover, .btn-teleop-key.active {
+  background: var(--color-teal-accent);
+  color: #0b111c;
+  border-color: var(--color-teal-accent);
+  transform: scale(0.96);
+}
+
+.btn-teleop-key.stop {
+  background: #7f1d1d;
+  color: #ffffff;
+  border-color: #ef4444;
+}
+
+.btn-teleop-key.stop:hover, .btn-teleop-key.stop.active {
+  background: #dc2626;
+  color: #ffffff;
+}
+
+.teleop-gauge-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 140px;
+}
+
+.teleop-gauge-line {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: #94a3b8;
+}
+
+.teleop-gauge-line strong {
+  color: #ffffff;
+}
+
+.teleop-speed-buttons {
+  display: flex;
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.teleop-speed-pill {
+  flex: 1;
+  background: #1c2533;
+  border: 1px solid #2d3b4e;
+  color: #94a3b8;
+  padding: 3px 0;
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  font-weight: 700;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s ease;
+}
+
+.teleop-speed-pill.active {
+  background: var(--color-teal-accent);
+  color: #0b111c;
+  border-color: var(--color-teal-accent);
+}
+

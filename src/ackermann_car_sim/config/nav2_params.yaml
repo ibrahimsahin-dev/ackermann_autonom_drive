@@ -116,9 +116,9 @@ local_costmap:
       width: 4
       height: 4
       resolution: 0.05
-      # Gerçek robot boyutları (chassis 0.28m x 0.13m) + tekerlek çıkıntısı
-      footprint: "[[0.15, 0.07], [0.15, -0.07], [-0.15, -0.07], [-0.15, 0.07]]"
-      footprint_padding: 0.02  # 2cm ek güvenlik payı
+      # Gerçek robot boyutları (210mm x 200mm)
+      footprint: "[[0.11, 0.10], [0.11, -0.10], [-0.11, -0.10], [-0.11, 0.10]]"
+      footprint_padding: 0.015  # 1.5cm ek güvenlik payı
       plugins: ["obstacle_layer", "inflation_layer"]
       obstacle_layer:
         plugin: "nav2_costmap_2d::ObstacleLayer"
@@ -134,8 +134,8 @@ local_costmap:
           obstacle_max_range: 5.0
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.5   # Artırıldı — engele yaklaşınca maliyet hızlı artar
-        inflation_radius: 0.70     # 0.55→0.70m: Daha geniş güvenlik balonu
+        cost_scaling_factor: 3.5
+        inflation_radius: 0.45     # 21cm robot için uyarlanmış güvenlik balonu
       always_send_full_costmap: True
 
 global_costmap:
@@ -146,9 +146,9 @@ global_costmap:
       global_frame: map
       robot_base_frame: base_footprint
       use_sim_time: True
-      # Gerçek robot footprint — local_costmap ile senkron
-      footprint: "[[0.15, 0.07], [0.15, -0.07], [-0.15, -0.07], [-0.15, 0.07]]"
-      footprint_padding: 0.02
+      # Gerçek robot boyutları (210mm x 200mm)
+      footprint: "[[0.11, 0.10], [0.11, -0.10], [-0.11, -0.10], [-0.11, 0.10]]"
+      footprint_padding: 0.015
       resolution: 0.05
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
@@ -169,8 +169,8 @@ global_costmap:
           obstacle_max_range: 5.0
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.5   # Local ile eşleştirildi
-        inflation_radius: 0.70     # Local ile eşleştirildi
+        cost_scaling_factor: 3.5
+        inflation_radius: 0.45     # Local ile eşleştirildi
       always_send_full_costmap: True
 
 map_server:
@@ -199,7 +199,7 @@ planner_server:
       non_straight_penalty: 1.10
       cost_penalty: 2.0               # Engellere/dar alanlara yaklaşma cezası
       retries: 10
-      minimum_turning_radius: 0.25    # Ackermann aracın min dönüş yarıçapı
+      minimum_turning_radius: 0.15    # Gerçek robot kalibre edilmiş aks mesafesi (150mm)
       lookup_table_size: 20.0
       cache_obstacle_heuristic: false
       debug_visualizations: false

@@ -77,8 +77,10 @@ class ROSBridgeNode(Node):
 
     def __init__(self):
         super().__init__("ackermann_web_bridge")
-        self.set_parameters([rclpy.parameter.Parameter("use_sim_time", rclpy.Parameter.Type.BOOL, True)])
-        self.get_logger().info("Initializing Nexus Autonomous Web Bridge Node...")
+        # Gerçek robot için varsayılan False; simülasyon ortamında USE_SIM_TIME=true olarak ayarlanır
+        use_sim = os.environ.get("USE_SIM_TIME", "false").lower() in ("1", "true", "yes")
+        self.set_parameters([rclpy.parameter.Parameter("use_sim_time", rclpy.Parameter.Type.BOOL, use_sim)])
+        self.get_logger().info(f"Initializing Nexus Autonomous Web Bridge Node (use_sim_time={use_sim})...")
 
         # Robot Telemetry State
         self.robot_pose = {"x": 0.0, "y": 0.0, "yaw": 0.0, "cov": 0.005}
@@ -139,7 +141,9 @@ class ROSBridgeNode(Node):
         self.create_subscription(LaserScan, "/scan", self.scan_cb, sensor_qos)
         self.create_subscription(Path, "/plan", self.global_plan_cb, 5)
         self.create_subscription(Path, "/local_plan", self.local_plan_cb, 5)
-        self.create_subscription(RosImage, "/camera/image", self.camera_cb, sensor_qos)
+        # Camera Streams (RealSense / USB Cam / Raspi Camera)
+        for cam_topic in ["/camera/image", "/camera/image_raw", "/camera/color/image_raw", "/image_raw"]:
+            self.create_subscription(RosImage, cam_topic, self.camera_cb, sensor_qos)
         self.create_subscription(OccupancyGrid, "/map", self.map_cb, map_qos)
 
         # 20 Hz Real-Time TF Pose Tracking
@@ -308,7 +312,7 @@ class ROSBridgeNode(Node):
         """Tracks linear speed and calculates Ackermann front wheel steering angle."""
         vx = msg.twist.twist.linear.x
         wz = msg.twist.twist.angular.z
-        wheelbase = 0.20  # 20 cm
+        wheelbase = 0.15  # 15 cm (Gerçek kalibre edilmiş aks mesafesi)
         steer_rad = 0.0
         if abs(vx) > 0.01:
             steer_rad = math.atan2(wheelbase * wz, vx)
@@ -348,17 +352,21 @@ class ROSBridgeNode(Node):
     def camera_cb(self, msg: RosImage):
         """Encodes camera image to compressed JPEG."""
         try:
-            # Parse rgb8 image
             if msg.encoding in ("rgb8", "bgr8"):
                 np_arr = np.frombuffer(msg.data, dtype=np.uint8).reshape((msg.height, msg.width, 3))
                 if msg.encoding == "rgb8":
                     np_arr = cv2.cvtColor(np_arr, cv2.COLOR_RGB2BGR)
-                # Resize to 320x240 for ultra-fast streaming
                 small = cv2.resize(np_arr, (320, 240))
-                _, jpeg = cv2.imencode(".jpg", small, [int(cv2.IMWRITE_JPEG_QUALITY), 65])
+                _, jpeg = cv2.imencode(".jpg", small, [int(cv2.IMWRITE_JPEG_QUALITY), 70])
+                self.latest_camera_jpeg = jpeg.tobytes()
+            elif msg.encoding == "mono8":
+                np_arr = np.frombuffer(msg.data, dtype=np.uint8).reshape((msg.height, msg.width))
+                color = cv2.cvtColor(np_arr, cv2.COLOR_GRAY2BGR)
+                small = cv2.resize(color, (320, 240))
+                _, jpeg = cv2.imencode(".jpg", small, [int(cv2.IMWRITE_JPEG_QUALITY), 70])
                 self.latest_camera_jpeg = jpeg.tobytes()
         except Exception as e:
-            self.get_logger().error(f"Camera encode error: {e}")
+            pass
 
     def simulate_battery(self):
         """Realistic battery simulation."""
@@ -465,15 +473,42 @@ class ROSBridgeNode(Node):
         self.publish_cmd_vel(0.0, 0.0)
 
     def publish_cmd_vel(self, linear: float, angular: float):
-        """Publishes teleoperation speed commands."""
+        """Publishes teleoperation speed commands and updates Ackermann telemetry."""
         if self.emergency_stop:
             linear = 0.0
             angular = 0.0
 
+        linear = float(linear)
+        angular = float(angular)
+
+        # Update navigation status if manually driven
+        if abs(linear) > 0.001 or abs(angular) > 0.001:
+            if self.navigation_status not in ("ESTOP",):
+                self.navigation_status = "MANUAL"
+        elif self.navigation_status == "MANUAL":
+            self.navigation_status = "STANDBY"
+
         twist = Twist()
-        twist.linear.x = float(linear)
-        twist.angular.z = float(angular)
+        twist.linear.x = linear
+        twist.angular.z = angular
         self.cmd_vel_pub.publish(twist)
+
+        # Calculate Ackermann steering angle for live SCADA telemetry
+        wheelbase = 0.15
+        steer_deg = 0.0
+        if abs(linear) > 0.01:
+            steer_rad = math.atan2(wheelbase * angular, abs(linear))
+            steer_deg = math.degrees(steer_rad)
+        elif abs(angular) > 0.01:
+            steer_deg = 25.0 if angular > 0 else -25.0
+        steer_deg = max(-30.0, min(30.0, steer_deg))
+
+        self.velocity = {
+            "linear_x": round(linear, 3),
+            "angular_z": round(angular, 3),
+            "speed": round(abs(linear), 3),
+            "steer_deg": round(steer_deg, 1)
+        }
 
     def set_initial_pose(self, x: float, y: float, yaw: float):
         """Re-initializes AMCL 2D Pose Estimate."""
@@ -694,18 +729,43 @@ async def get_diagnostics():
 async def camera_stream():
     """Streams live MJPEG video from robot Intel RealSense camera."""
     async def frame_generator():
-        # Fallback test pattern if no camera
-        blank_frame = None
+        hud_tick = 0
         while True:
             if ros_node and ros_node.latest_camera_jpeg:
                 frame_bytes = ros_node.latest_camera_jpeg
             else:
-                if blank_frame is None:
-                    dummy = np.zeros((240, 320, 3), dtype=np.uint8)
-                    cv2.putText(dummy, "REALSENSE STANDBY", (30, 120), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 220, 255), 2)
-                    _, enc = cv2.imencode(".jpg", dummy)
-                    blank_frame = enc.tobytes()
-                frame_bytes = blank_frame
+                hud_tick += 1
+                hud = np.zeros((240, 320, 3), dtype=np.uint8)
+                hud[:] = (18, 24, 34)  # dark slate background
+
+                # Pitch & horizon lines
+                cv2.line(hud, (130, 120), (190, 120), (0, 229, 200), 1)
+                cv2.line(hud, (160, 95), (160, 145), (0, 229, 200), 1)
+                cv2.circle(hud, (160, 120), 18, (0, 229, 200), 1)
+                cv2.circle(hud, (160, 120), 2, (0, 229, 200), -1)
+
+                # Corner brackets
+                cv2.line(hud, (20, 20), (50, 20), (50, 75, 105), 1)
+                cv2.line(hud, (20, 20), (20, 50), (50, 75, 105), 1)
+                cv2.line(hud, (300, 20), (270, 20), (50, 75, 105), 1)
+                cv2.line(hud, (300, 20), (300, 50), (50, 75, 105), 1)
+
+                # Telemetry text
+                cv2.putText(hud, "LOGIX AMR - REAL FPV", (24, 34), cv2.FONT_HERSHEY_SIMPLEX, 0.42, (0, 229, 200), 1)
+                status_txt = ros_node.navigation_status if ros_node else "ONLINE"
+                cv2.putText(hud, f"DURUM: {status_txt}", (24, 52), cv2.FONT_HERSHEY_SIMPLEX, 0.35, (148, 163, 184), 1)
+
+                spd = ros_node.velocity.get("speed", 0.0) if ros_node else 0.0
+                steer = ros_node.velocity.get("steer_deg", 0.0) if ros_node else 0.0
+                cv2.putText(hud, f"HIZ: {spd:.2f} m/s", (24, 218), cv2.FONT_HERSHEY_SIMPLEX, 0.38, (255, 255, 255), 1)
+                cv2.putText(hud, f"DIREKSIYON: {steer:+.1f} deg", (170, 218), cv2.FONT_HERSHEY_SIMPLEX, 0.38, (0, 229, 200), 1)
+
+                # Pulsing REC/LIVE dot
+                dot_color = (16, 185, 129) if (hud_tick % 20 < 10) else (6, 95, 70)
+                cv2.circle(hud, (295, 30), 4, dot_color, -1)
+
+                _, enc = cv2.imencode(".jpg", hud, [int(cv2.IMWRITE_JPEG_QUALITY), 65])
+                frame_bytes = enc.tobytes()
 
             yield (
                 b"--frame\r\n"

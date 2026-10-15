@@ -765,6 +765,10 @@ html, body {
         <i class="fa-solid fa-map-location-dot"></i>
         <span>Harita Editörü (SLAM)</span>
       </a>
+      <button id="btn-top-camera-pip" class="header-link-pill" title="Kamera PiP Aç/Kapat">
+        <i class="fa-solid fa-video"></i>
+        <span>Kamera PiP</span>
+      </button>
       <button id="btn-top-estop" class="btn-compact-estop" title="Endüstriyel Acil Stop (E-Stop)">
         <i class="fa-solid fa-octagon-exclamation"></i> E-STOP
       </button>
@@ -924,6 +928,51 @@ html, body {
 
   <!-- ==================== 5. TOAST NOTIFICATION CONTAINER ==================== -->
   <div id="toast-container" class="toast-container"></div>
+
+  <!-- ==================== 5.5 FLOATING ACKERMANN TELEOP CONTROLLER ==================== -->
+  <div id="floating-teleop-dock" class="floating-teleop-dock">
+    <div class="teleop-dock-header">
+      <div class="teleop-dock-title">
+        <i class="fa-solid fa-gamepad" style="color: var(--color-teal-accent);"></i>
+        <span>MANUEL TELEOP</span>
+      </div>
+      <span class="teleop-dock-badge">ACKERMANN CAR</span>
+    </div>
+
+    <div class="teleop-dock-content">
+      <!-- 9-Key Ackermann D-Pad -->
+      <div class="teleop-keypad-9">
+        <button class="btn-teleop-key" data-dir="fwd-left" title="Sol-İleri [W+A]"><i class="fa-solid fa-arrow-up-left"></i></button>
+        <button class="btn-teleop-key" data-dir="forward" title="İleri [W]"><i class="fa-solid fa-arrow-up"></i></button>
+        <button class="btn-teleop-key" data-dir="fwd-right" title="Sağ-İleri [W+D]"><i class="fa-solid fa-arrow-up-right"></i></button>
+
+        <button class="btn-teleop-key" data-dir="left" title="Sol Direksiyon [A]"><i class="fa-solid fa-arrow-left"></i></button>
+        <button class="btn-teleop-key stop" data-dir="stop" title="Acil Fren [Boşluk]"><i class="fa-solid fa-hand"></i></button>
+        <button class="btn-teleop-key" data-dir="right" title="Sağ Direksiyon [D]"><i class="fa-solid fa-arrow-right"></i></button>
+
+        <button class="btn-teleop-key" data-dir="back-left" title="Sol-Geri [S+A]"><i class="fa-solid fa-arrow-down-left"></i></button>
+        <button class="btn-teleop-key" data-dir="backward" title="Geri [S]"><i class="fa-solid fa-arrow-down"></i></button>
+        <button class="btn-teleop-key" data-dir="back-right" title="Sağ-Geri [S+D]"><i class="fa-solid fa-arrow-down-right"></i></button>
+      </div>
+
+      <!-- Teleop Gauges & Speed Selector -->
+      <div class="teleop-gauge-panel">
+        <div class="teleop-gauge-line">
+          <span>Hız:</span>
+          <strong id="dock-teleop-speed">0.00 m/s</strong>
+        </div>
+        <div class="teleop-gauge-line">
+          <span>Direksiyon:</span>
+          <strong id="dock-teleop-steer" style="color: var(--color-teal-accent);">0.0°</strong>
+        </div>
+        <div class="teleop-speed-buttons">
+          <button class="teleop-speed-pill" data-speed="0.15">0.15</button>
+          <button class="teleop-speed-pill active" data-speed="0.30">0.30</button>
+          <button class="teleop-speed-pill" data-speed="0.50">0.50</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- ==================== 6. FLOATING FPV CAMERA HUD (Picture-in-Picture) ==================== -->
   <div id="camera-pip-widget" class="camera-pip-widget">

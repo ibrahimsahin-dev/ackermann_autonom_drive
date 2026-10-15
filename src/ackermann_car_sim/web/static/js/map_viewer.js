@@ -10,6 +10,10 @@ class MapViewer {
     this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas.getContext('2d');
     
+    // SLAM Mode: mapping.html passes slamMode:true → API calls use mode=slam
+    // Normal mode: index.html uses static arena_map
+    this.slamMode = options.slamMode === true;
+    
     // Viewport transform state
     this.zoom = 2.5;
     this.panX = 0;
@@ -94,7 +98,9 @@ class MapViewer {
   }
 
   loadMapImage() {
-    fetch('/api/map/info')
+    const modeParam = this.slamMode ? 'slam' : 'static';
+
+    fetch('/api/map/info?mode=' + modeParam)
       .then(res => res.json())
       .then(info => {
         if (info && info.width > 0) {
@@ -110,8 +116,16 @@ class MapViewer {
       })
       .catch(() => {});
 
+    if (this.slamMode) {
+      // SLAM modu: Statik harita YUKLENME — sadece canlı /map topic verisi
+      // mapImageLoaded = false kalır, sadece grid + lidar noktaları gösterilir
+      this.mapImage = null;
+      this.mapImageLoaded = false;
+      return;
+    }
+
     this.mapImage = new Image();
-    this.mapImage.src = '/api/map/image?t=' + Date.now();
+    this.mapImage.src = '/api/map/image?mode=static&t=' + Date.now();
     this.mapImage.onload = () => {
       this.mapImageLoaded = true;
       if (this.mapImage.naturalWidth) this.mapInfo.width = this.mapImage.naturalWidth;
@@ -130,9 +144,10 @@ class MapViewer {
   updateDynamicMap(newInfo) {
     if (this.isUpdatingMap) return;
     this.isUpdatingMap = true;
+    const modeParam = this.slamMode ? 'slam' : 'static';
 
     const img = new Image();
-    img.src = '/api/map/image?t=' + Date.now();
+    img.src = '/api/map/image?mode=' + modeParam + '&t=' + Date.now();
     img.onload = () => {
       this.mapImage = img;
       this.mapImageLoaded = true;

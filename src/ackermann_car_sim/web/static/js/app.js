@@ -58,6 +58,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const elCameraWidget = document.getElementById('camera-pip-widget');
   const elBtnPipMinimize = document.getElementById('btn-pip-minimize');
   const elBtnPipClose = document.getElementById('btn-pip-close');
+  const elBtnTopCameraPip = document.getElementById('btn-top-camera-pip');
+  const elPipSteerLabel = document.getElementById('pip-steer-label');
+
+  // DOM Elements - Floating Teleop Dock
+  const elFloatingTeleopDock = document.getElementById('floating-teleop-dock');
+  const elDockSpeed = document.getElementById('dock-teleop-speed');
+  const elDockSteer = document.getElementById('dock-teleop-steer');
 
   // DOM Elements - Dispatch Drawer
   const elDispatchDrawer = document.getElementById('dispatch-drawer');
@@ -155,23 +162,37 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================================================
   // CAMERA FPV (RealSense PiP) CONTROLS
   // ============================================================================
-  function toggleCameraWidget(force = null) {
+  function toggleCameraWidget(force = null, silent = false) {
     if (!elCameraWidget) return;
     const isHidden = elCameraWidget.classList.contains('hidden');
     const show = force !== null ? force : isHidden;
     if (show) {
       elCameraWidget.classList.remove('hidden');
       if (elBtnRailCamera) elBtnRailCamera.classList.add('active');
-      showToast('📹 Canlı kamera akışı açıldı.', 'info');
+      if (elBtnTopCameraPip) {
+        elBtnTopCameraPip.classList.add('active');
+        elBtnTopCameraPip.innerHTML = '<i class="fa-solid fa-video"></i> <span>Kamera PiP (Açık)</span>';
+        elBtnTopCameraPip.style.borderColor = 'var(--color-teal-accent)';
+      }
+      if (!silent) showToast('📹 Canlı kamera akışı (PiP) açıldı.', 'info');
     } else {
       elCameraWidget.classList.add('hidden');
       if (elBtnRailCamera) elBtnRailCamera.classList.remove('active');
-      showToast('📹 Canlı kamera akışı gizlendi.', 'info');
+      if (elBtnTopCameraPip) {
+        elBtnTopCameraPip.classList.remove('active');
+        elBtnTopCameraPip.innerHTML = '<i class="fa-solid fa-video-slash"></i> <span>Kamera PiP (Kapalı)</span>';
+        elBtnTopCameraPip.style.borderColor = '';
+      }
+      if (!silent) showToast('📹 Canlı kamera akışı gizlendi.', 'info');
     }
   }
 
   if (elBtnRailCamera) {
     elBtnRailCamera.addEventListener('click', () => toggleCameraWidget());
+  }
+
+  if (elBtnTopCameraPip) {
+    elBtnTopCameraPip.addEventListener('click', () => toggleCameraWidget());
   }
 
   if (elBtnPipClose) {
@@ -469,79 +490,181 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // ============================================================================
-  // 7. TELEOP DRIVING CONTROLS (KEYBOARD & VIRTUAL KEYPAD)
+  // 7. TELEOP DRIVING CONTROLS (ACKERMANN MULTI-KEY & FLOATING DOCK)
   // ============================================================================
-  async function sendCmdVel(linear, angular) {
+  const pressedKeys = new Set();
+  let teleopDriveInterval = null;
+
+  function sendCmdVel(linear, angular) {
     if (state.estop) return;
-    try {
-      await fetch('/api/teleop/cmd_vel', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ linear, angular })
-      });
-    } catch (e) {}
+    const lin = Number(linear) || 0.0;
+    const ang = Number(angular) || 0.0;
+
+    // Fast WebSocket
+    if (state.socket && state.socket.readyState === WebSocket.OPEN) {
+      try {
+        state.socket.send(JSON.stringify({
+          type: 'cmd_vel',
+          linear: lin,
+          angular: ang
+        }));
+        return;
+      } catch (err) {}
+    }
+
+    // Fallback HTTP
+    fetch('/api/teleop/cmd_vel', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ linear: lin, angular: ang })
+    }).catch(() => {});
   }
 
-  // Speed Presets
-  document.querySelectorAll('.btn-speed-pill').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      document.querySelectorAll('.btn-speed-pill').forEach(b => {
-        b.classList.remove('active');
-        b.style.background = '';
-        b.style.color = '';
-      });
-      btn.classList.add('active');
-      btn.style.background = 'var(--color-primary)';
-      btn.style.color = '#ffffff';
-      state.speedLimit = parseFloat(btn.dataset.speed) || 0.4;
-      showToast(`Hız limiti: ${state.speedLimit} m/s`, 'info');
+  function updateTeleopVisuals(vx, wz) {
+    const wheelbase = 0.15;
+    let steerDeg = 0.0;
+    if (Math.abs(vx) > 0.01) {
+      steerDeg = (Math.atan2(wheelbase * wz, Math.abs(vx)) * 180.0) / Math.PI;
+    } else if (Math.abs(wz) > 0.01) {
+      steerDeg = wz > 0 ? 25.0 : -25.0;
+    }
+    steerDeg = Math.max(-30.0, Math.min(30.0, steerDeg));
+
+    if (elDockSpeed) elDockSpeed.innerText = `${Math.abs(vx).toFixed(2)} m/s`;
+    if (elDockSteer) elDockSteer.innerText = `${steerDeg > 0 ? '+' : ''}${steerDeg.toFixed(1)}°`;
+    if (elPipSteerLabel) elPipSteerLabel.innerText = `AÇI: ${steerDeg > 0 ? '+' : ''}${steerDeg.toFixed(1)}°`;
+  }
+
+  function computeDriveCommand() {
+    let vx = 0.0;
+    let wz = 0.0;
+    const spd = state.speedLimit || 0.3;
+    const turnRate = 1.0; // Ackermann steering angular rate
+
+    const isFwd = pressedKeys.has('w') || pressedKeys.has('arrowup') || pressedKeys.has('forward') || pressedKeys.has('fwd-left') || pressedKeys.has('fwd-right');
+    const isBack = pressedKeys.has('s') || pressedKeys.has('arrowdown') || pressedKeys.has('backward') || pressedKeys.has('back-left') || pressedKeys.has('back-right');
+    const isLeft = pressedKeys.has('a') || pressedKeys.has('arrowleft') || pressedKeys.has('left') || pressedKeys.has('fwd-left') || pressedKeys.has('back-left');
+    const isRight = pressedKeys.has('d') || pressedKeys.has('arrowright') || pressedKeys.has('right') || pressedKeys.has('fwd-right') || pressedKeys.has('back-right');
+
+    if (isFwd && !isBack) {
+      vx = spd;
+      if (isLeft && !isRight) wz = turnRate;
+      else if (isRight && !isLeft) wz = -turnRate;
+    } else if (isBack && !isFwd) {
+      vx = -spd;
+      if (isLeft && !isRight) wz = turnRate;
+      else if (isRight && !isLeft) wz = -turnRate;
+    } else if (isLeft && !isRight) {
+      // Araç dururken veya yavaş manevrada direksiyonu sola kır
+      vx = spd * 0.5;
+      wz = turnRate;
+    } else if (isRight && !isLeft) {
+      // Araç dururken veya yavaş manevrada direksiyonu sağa kır
+      vx = spd * 0.5;
+      wz = -turnRate;
+    }
+
+    return { vx, wz };
+  }
+
+  function startTeleopDrive() {
+    if (state.estop) return;
+    if (!teleopDriveInterval) {
+      const { vx, wz } = computeDriveCommand();
+      sendCmdVel(vx, wz);
+      updateTeleopVisuals(vx, wz);
+      teleopDriveInterval = setInterval(() => {
+        if (state.estop) {
+          stopTeleopDrive();
+          return;
+        }
+        const cmd = computeDriveCommand();
+        sendCmdVel(cmd.vx, cmd.wz);
+        updateTeleopVisuals(cmd.vx, cmd.wz);
+      }, 80); // 12.5 Hz continuous heartbeat
+    }
+  }
+
+  function stopTeleopDrive() {
+    if (teleopDriveInterval) {
+      clearInterval(teleopDriveInterval);
+      teleopDriveInterval = null;
+    }
+    sendCmdVel(0.0, 0.0);
+    setTimeout(() => sendCmdVel(0.0, 0.0), 50);
+    updateTeleopVisuals(0.0, 0.0);
+  }
+
+  // Speed Presets Synchronization
+  function setSpeedLimit(spd) {
+    state.speedLimit = parseFloat(spd) || 0.3;
+    document.querySelectorAll('.btn-speed-pill, .teleop-speed-pill').forEach((b) => {
+      const active = Math.abs(parseFloat(b.dataset.speed) - state.speedLimit) < 0.05;
+      b.classList.toggle('active', active);
     });
+    showToast(`Hız limiti: ${state.speedLimit.toFixed(2)} m/s`, 'info');
+  }
+
+  document.querySelectorAll('.btn-speed-pill, .teleop-speed-pill').forEach((btn) => {
+    btn.addEventListener('click', () => setSpeedLimit(btn.dataset.speed));
   });
 
-  // Virtual Keypad Clicks
-  document.querySelectorAll('.btn-mini-key').forEach((btn) => {
+  // Wire up Virtual Keypad Buttons (.btn-teleop-key & .btn-mini-key)
+  document.querySelectorAll('.btn-teleop-key, .btn-mini-key').forEach((btn) => {
     const dir = btn.dataset.dir;
 
-    const startDrive = () => {
-      if (dir === 'forward') sendCmdVel(state.speedLimit, 0.0);
-      else if (dir === 'backward') sendCmdVel(-state.speedLimit, 0.0);
-      else if (dir === 'left') sendCmdVel(state.speedLimit * 0.7, 0.6);
-      else if (dir === 'right') sendCmdVel(state.speedLimit * 0.7, -0.6);
-      else if (dir === 'stop') sendCmdVel(0.0, 0.0);
+    const startBtn = (e) => {
+      if (e) e.preventDefault();
+      if (dir === 'stop') {
+        pressedKeys.clear();
+        stopTeleopDrive();
+        return;
+      }
+      pressedKeys.add(dir);
+      btn.classList.add('active');
+      startTeleopDrive();
     };
 
-    const stopDrive = () => {
-      if (dir !== 'stop') sendCmdVel(0.0, 0.0);
+    const stopBtn = (e) => {
+      if (e) e.preventDefault();
+      pressedKeys.delete(dir);
+      btn.classList.remove('active');
+      if (pressedKeys.size === 0) {
+        stopTeleopDrive();
+      }
     };
 
-    btn.addEventListener('mousedown', startDrive);
-    btn.addEventListener('mouseup', stopDrive);
-    btn.addEventListener('touchstart', (e) => { e.preventDefault(); startDrive(); });
-    btn.addEventListener('touchend', (e) => { e.preventDefault(); stopDrive(); });
+    btn.addEventListener('mousedown', startBtn);
+    btn.addEventListener('mouseup', stopBtn);
+    btn.addEventListener('mouseleave', stopBtn);
+    btn.addEventListener('touchstart', startBtn);
+    btn.addEventListener('touchend', stopBtn);
+    btn.addEventListener('touchcancel', stopBtn);
   });
 
-  // Global Keyboard Shortcuts
+  // Global Keyboard Driving (WASD & Arrows)
   window.addEventListener('keydown', (e) => {
     if (['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName)) return;
     const key = e.key.toLowerCase();
 
-    if (key === 'w' || key === 'arrowup') {
-      sendCmdVel(state.speedLimit, 0.0);
-    } else if (key === 's' || key === 'arrowdown') {
-      sendCmdVel(-state.speedLimit, 0.0);
-    } else if (key === 'a' || key === 'arrowleft') {
-      sendCmdVel(state.speedLimit * 0.7, 0.6);
-    } else if (key === 'd' || key === 'arrowright') {
-      sendCmdVel(state.speedLimit * 0.7, -0.6);
-    } else if (key === ' ' || key === 'escape') {
-      sendCmdVel(0.0, 0.0);
+    if (['w', 's', 'a', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key)) {
+      e.preventDefault();
+      pressedKeys.add(key);
+      startTeleopDrive();
+    } else if (key === ' ' || key === 'escape' || key === 'x') {
+      e.preventDefault();
+      pressedKeys.clear();
+      stopTeleopDrive();
     }
   });
 
   window.addEventListener('keyup', (e) => {
     const key = e.key.toLowerCase();
     if (['w', 's', 'a', 'd', 'arrowup', 'arrowdown', 'arrowleft', 'arrowright'].includes(key)) {
-      sendCmdVel(0.0, 0.0);
+      pressedKeys.delete(key);
+      if (pressedKeys.size === 0) {
+        stopTeleopDrive();
+      }
     }
   });
 
@@ -552,6 +675,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const proto = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const wsUrl = `${proto}//${window.location.host}/ws/telemetry`;
     const socket = new WebSocket(wsUrl);
+    state.socket = socket;
 
     socket.onopen = () => {
       state.connected = true;
@@ -598,6 +722,9 @@ document.addEventListener('DOMContentLoaded', () => {
       state.steerDeg = data.velocity.steer_deg || 0.0;
       mapViewer.steerDeg = state.steerDeg;
       if (elFootSpeed) elFootSpeed.innerText = `${state.speed.toFixed(2)} m/s`;
+      if (elDockSpeed) elDockSpeed.innerText = `${state.speed.toFixed(2)} m/s`;
+      if (elDockSteer) elDockSteer.innerText = `${state.steerDeg > 0 ? '+' : ''}${state.steerDeg.toFixed(1)}°`;
+      if (elPipSteerLabel) elPipSteerLabel.innerText = `AÇI: ${state.steerDeg > 0 ? '+' : ''}${state.steerDeg.toFixed(1)}°`;
     }
 
     // 3. Battery
@@ -684,4 +811,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Start WebSocket
   connectWebSocket();
+
+  // PiP Kamerayı başlangıçta otomatik ve açık olarak getir ("tip ac / pip ac")
+  setTimeout(() => {
+    toggleCameraWidget(true, true);
+  }, 100);
 });

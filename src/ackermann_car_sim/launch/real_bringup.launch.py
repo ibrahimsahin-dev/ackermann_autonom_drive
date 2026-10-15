@@ -3,9 +3,14 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
 from launch.conditions import IfCondition, UnlessCondition
-from launch.substitutions import LaunchConfiguration, Command, PythonExpression
+from launch.substitutions import LaunchConfiguration, Command, EqualsSubstitution
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
+
+# urg_node ROS 2'de scan frame_id olarak varsayılan 'laser' kullanır.
+# RF2O scan mesajının header.frame_id'sine bakarak TF arar.
+# Bu nedenle 'lidar_link' yerine 'laser' frame'i tanımlanmalı.
+LIDARFRAME = 'laser'
 
 def generate_launch_description():
     pkg_dir = get_package_share_directory('ackermann_car_sim')
@@ -18,10 +23,19 @@ def generate_launch_description():
         description='LiDAR baglanti tipi: "serial" (USB) veya "ethernet"'
     )
 
+    # Hokuyo LiDAR için otomatik port tespiti (/dev/serial/by-id)
+    default_lidar_port = '/dev/ttyACM0'
+    by_id_dir = '/dev/serial/by-id'
+    if os.path.exists(by_id_dir):
+        for entry in os.listdir(by_id_dir):
+            if any(k in entry.lower() for k in ['hokuyo', 'urg', 'laser']):
+                default_lidar_port = os.path.realpath(os.path.join(by_id_dir, entry))
+                break
+
     lidar_serial_port_arg = DeclareLaunchArgument(
         'serial_port',
-        default_value='/dev/ttyACM0',
-        description='Hokuyo LiDAR USB seri port yolu (/dev/ttyACM0 veya /dev/ttyUSB0)'
+        default_value=default_lidar_port,
+        description='Hokuyo LiDAR USB seri port yolu (/dev/ttyACM0, /dev/ttyACM1 vb.)'
     )
 
     lidar_ip_arg = DeclareLaunchArgument(
@@ -57,6 +71,20 @@ def generate_launch_description():
         parameters=[{'use_sim_time': False}]
     )
 
+    # ── 'laser' frame'i için static TF (base_link → laser) ──────────────────
+    # urg_node varsayılan olarak 'laser' frame_id ile scan yayınlar.
+    # RF2O scan.header.frame_id'yi okuyarak TF arar: base_footprint → laser.
+    # URDF'deki lidar_link pozisyonuyla aynı (x=0.12 m, z=0.12 m).
+    laser_static_tf = Node(
+        package='tf2_ros',
+        executable='static_transform_publisher',
+        name='base_link_to_laser_tf',
+        output='screen',
+        arguments=['0.12', '0.0', '0.12',   # x y z  (lidar_link ile aynı)
+                   '0.0',  '0.0', '0.0',    # roll pitch yaw
+                   'base_link', 'laser']    # parent → child
+    )
+
     # 2. Hokuyo LiDAR Düğümü (USB Bağlantısı)
     urg_node_serial = Node(
         package='urg_node',
@@ -66,15 +94,15 @@ def generate_launch_description():
         parameters=[{
             'serial_port': LaunchConfiguration('serial_port'),
             'serial_baud': 115200,
-            'frame_id': 'lidar_link',
+            'frame_id': 'laser',        # urg_node varsayılanı 'laser' — RF2O ile uyumlu
             'calibrate_time': True,
             'publish_intensity': False,
             'publish_multiecho': False,
-            'angle_min': -2.35619449,  # -135 derece
-            'angle_max': 2.35619449,   # +135 derece (Toplam 270 derece)
+            'angle_min': -2.35619449,   # -135 derece
+            'angle_max': 2.35619449,    # +135 derece (Toplam 270 derece)
             'use_sim_time': False
         }],
-        condition=UnlessCondition(PythonExpression(["'", LaunchConfiguration('lidar_connection'), "' == 'ethernet'"]))
+        condition=UnlessCondition(EqualsSubstitution(LaunchConfiguration('lidar_connection'), 'ethernet'))
     )
 
     # 3. Hokuyo LiDAR Düğümü (Ethernet Bağlantısı)
@@ -86,13 +114,13 @@ def generate_launch_description():
         parameters=[{
             'ip_address': LaunchConfiguration('ip_address'),
             'ip_port': 10940,
-            'frame_id': 'lidar_link',
+            'frame_id': 'laser',        # RF2O ile uyumlu
             'calibrate_time': True,
             'angle_min': -2.35619449,
             'angle_max': 2.35619449,
             'use_sim_time': False
         }],
-        condition=IfCondition(PythonExpression(["'", LaunchConfiguration('lidar_connection'), "' == 'ethernet'"]))
+        condition=IfCondition(EqualsSubstitution(LaunchConfiguration('lidar_connection'), 'ethernet'))
     )
 
     # 4. RF2O Lazer Odometri (Tekerlek enkoderi olmadan doğrudan Hokuyo ile hassas odometri)
@@ -120,6 +148,7 @@ def generate_launch_description():
         use_rf2o_arg,
         robot_state_publisher,
         joint_state_publisher,
+        laser_static_tf,    # base_link → laser static TF (RF2O için zorunlu)
         urg_node_serial,
         urg_node_ethernet,
         laser_odometry

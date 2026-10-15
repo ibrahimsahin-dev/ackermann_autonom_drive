@@ -37,10 +37,14 @@ class ActuatorTester(Node):
         self.get_logger().info("Motor & Aktüatör Test Node Hazır.")
 
     def stop_robot(self):
-        msg = Twist()
-        for _ in range(5):
-            self.pub.publish(msg)
-            time.sleep(0.05)
+        try:
+            if rclpy.ok():
+                msg = Twist()
+                for _ in range(3):
+                    self.pub.publish(msg)
+                    time.sleep(0.03)
+        except Exception:
+            pass
 
     def send_pulse(self, linear_x: float, angular_z: float, duration: float, desc: str):
         print(f"\n{BOLD}{YELLOW}▶ Komut Gönderiliyor:{RESET} {desc}")
@@ -51,9 +55,9 @@ class ActuatorTester(Node):
         msg.angular.z = float(angular_z)
 
         start = time.time()
-        while (time.time() - start) < duration:
+        while (time.time() - start) < duration and rclpy.ok():
             self.pub.publish(msg)
-            time.sleep(0.1)
+            time.sleep(0.08)
 
         self.stop_robot()
         print(f"{GREEN}✔ Tamamlandı. Motorlar durduruldu.{RESET}")
@@ -67,10 +71,10 @@ def print_menu():
     print(f"------------------------------------------------------------------")
     print(f" [ 1 ]  İleri Dönüş Testi    (0.2 m/s, 2 sn)")
     print(f" [ 2 ]  Geri Dönüş Testi     (-0.2 m/s, 2 sn)")
-    print(f" [ 3 ]  Direksiyon SOLA      (Hız=0, Direksiyon Sola Çevrilir, 2 sn)")
-    print(f" [ 4 ]  Direksiyon SAĞA      (Hız=0, Direksiyon Sağa Çevrilir, 2 sn)")
+    print(f" [ 3 ]  Direksiyon SOLA      (Hız=0, Direksiyon Sola Çevrilir, 2.5 sn)")
+    print(f" [ 4 ]  Direksiyon SAĞA      (Hız=0, Direksiyon Sağa Çevrilir, 2.5 sn)")
     print(f" [ 5 ]  Direksiyon MERKEZ    (Direksiyon Düz Konuma Alınır)")
-    print(f" [ 6 ]  Kombine İleri+Sol    (Dönerek İlerleme Testi)")
+    print(f" [ 6 ]  Kombine İleri+Sol    (Dönerek İlerleme Testi, 2.5 sn)")
     print(f" [ 7 ]  Acil Fren (Tüm Sinyalleri Sıfırla)")
     print(f" [ q ]  Çıkış")
     print(f"==================================================================")
@@ -90,13 +94,13 @@ def main():
             elif choice == '2':
                 tester.send_pulse(linear_x=-0.2, angular_z=0.0, duration=2.0, desc="Geri Sürüş (Çekiş tekerlekleri geri dönmeli)")
             elif choice == '3':
-                tester.send_pulse(linear_x=0.0, angular_z=0.5, duration=2.5, desc="Direksiyon Sola Açılanma (Ön tekerler SOLA bakmalı)")
+                tester.send_pulse(linear_x=0.0, angular_z=1.0, duration=2.5, desc="Direksiyon Sola Açılanma (Ön tekerler SOLA bakmalı)")
             elif choice == '4':
-                tester.send_pulse(linear_x=0.0, angular_z=-0.5, duration=2.5, desc="Direksiyon Sağa Açılanma (Ön tekerler SAĞA bakmalı)")
+                tester.send_pulse(linear_x=0.0, angular_z=-1.0, duration=2.5, desc="Direksiyon Sağa Açılanma (Ön tekerler SAĞA bakmalı)")
             elif choice == '5':
                 tester.send_pulse(linear_x=0.0, angular_z=0.0, duration=1.0, desc="Direksiyon Sıfırlama (Ön tekerler TAM DÜZ olmalı)")
             elif choice == '6':
-                tester.send_pulse(linear_x=0.2, angular_z=0.4, duration=2.5, desc="Kombine İleri + Sol Dönüş")
+                tester.send_pulse(linear_x=0.2, angular_z=0.8, duration=2.5, desc="Kombine İleri + Sol Dönüş (Gözle Görülür Dönüş)")
             elif choice == '7':
                 tester.stop_robot()
                 print(f"{GREEN}Fren uygulandı.{RESET}")
@@ -110,7 +114,8 @@ def main():
     finally:
         tester.stop_robot()
         tester.destroy_node()
-        rclpy.shutdown()
+        if rclpy.ok():
+            rclpy.shutdown()
         print(f"\n{BOLD}Test sonlandırıldı. Motorlar güvenle kapatıldı.{RESET}")
 
 if __name__ == '__main__':

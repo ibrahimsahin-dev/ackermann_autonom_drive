@@ -33,6 +33,7 @@ cleanup() {
     kill $(jobs -p) 2>/dev/null || true
     pkill -f "urg_node" 2>/dev/null || true
     pkill -f "rf2o_laser_odometry" 2>/dev/null || true
+    pkill -f "arduino_mega_bridge.py" 2>/dev/null || true
     pkill -f "nav2" 2>/dev/null || true
     pkill -f "web/server.py" 2>/dev/null || true
     echo "✅ Robot güvenle durduruldu."
@@ -40,16 +41,26 @@ cleanup() {
 }
 trap cleanup SIGINT SIGTERM EXIT
 
+export USE_SIM_TIME=false
+
 echo "================================================================"
-echo "📡 2/3: Gerçek Sensörler ve Odometri Başlatılıyor..."
+echo "📡 2/4: Gerçek Sensörler ve Odometri Başlatılıyor..."
 echo "================================================================"
 ros2 launch ackermann_car_sim real_bringup.launch.py > /dev/null 2>&1 &
 BRINGUP_PID=$!
 
-sleep 4
+sleep 3
 
 echo "================================================================"
-echo "🌐 3/3: Web SCADA İstasyonu Başlatılıyor (Port 8080)..."
+echo "🔌 3/4: Arduino Mega ROS 2 Seri Köprüsü Başlatılıyor..."
+echo "================================================================"
+python3 "$WORKSPACE_DIR/scripts/real_tests/arduino_mega_bridge.py" > /dev/null 2>&1 &
+BRIDGE_PID=$!
+
+sleep 1
+
+echo "================================================================"
+echo "🌐 4/4: Web SCADA İstasyonu Başlatılıyor (Port 8080)..."
 echo "================================================================"
 python3 "$WORKSPACE_DIR/src/ackermann_car_sim/web/server.py" > /dev/null 2>&1 &
 WEB_PID=$!

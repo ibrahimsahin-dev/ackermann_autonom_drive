@@ -13,8 +13,8 @@ def generate_launch_description():
 
     map_arg = DeclareLaunchArgument(
         'map',
-        default_value=os.path.join(pkg_dir, 'maps', 'arena_map.yaml'),
-        description='Full path to map yaml file to load'
+        default_value='',
+        description='Kayitli harita dosyasi (SLAM modunda bos birakın)'
     )
 
     nav2_params_arg = DeclareLaunchArgument(
@@ -25,15 +25,16 @@ def generate_launch_description():
 
     use_sim_time_arg = DeclareLaunchArgument(
         'use_sim_time',
-        default_value='true',
-        description='Use simulation (Gazebo) clock if true'
+        default_value='false',
+        description='Gerçek robot için false, Gazebo simülasyonu için true'
     )
 
     use_rviz_arg = DeclareLaunchArgument(
         'use_rviz',
-        default_value='true',
-        description='Launch RViz2 if true'
+        default_value='false',
+        description='RViz2 açilsin mi? Pi üzerinde varsayilan false'
     )
+
 
     slam_arg = DeclareLaunchArgument(
         'slam',
