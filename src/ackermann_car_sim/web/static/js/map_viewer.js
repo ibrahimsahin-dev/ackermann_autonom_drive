@@ -10,9 +10,9 @@ class MapViewer {
     this.canvas = document.getElementById(canvasId);
     this.ctx = this.canvas.getContext('2d');
     
-    // SLAM Mode: mapping.html passes slamMode:true → API calls use mode=slam
+    // SLAM Mode: mapping.html passes slamMode:true OR URL is mapping.html → API calls use mode=slam
     // Normal mode: index.html uses static arena_map
-    this.slamMode = options.slamMode === true;
+    this.slamMode = options.slamMode === true || (typeof window !== 'undefined' && window.location.pathname.includes('mapping'));
     
     // Viewport transform state
     this.zoom = 2.5;

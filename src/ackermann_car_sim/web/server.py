@@ -281,7 +281,7 @@ class ROSBridgeNode(Node):
             self.get_logger().error(f"Error updating dynamic SLAM map: {e}")
 
     def update_tf_pose(self):
-        """Continuously resolves robot map pose from TF2 tree (map -> base_link)."""
+        """Continuously resolves robot map pose from TF2 tree (map -> base_link, fallback odom -> base_link)."""
         try:
             t = self.tf_buffer.lookup_transform("map", "base_link", Time())
             pos = t.transform.translation
@@ -291,7 +291,17 @@ class ROSBridgeNode(Node):
             self.robot_pose["y"] = round(pos.y, 3)
             self.robot_pose["yaw"] = round(yaw, 3)
         except Exception:
-            pass
+            # SLAM başlangıcında veya harita gecikmesinde odom -> base_link'e düşerek hareketin takibini sürdür
+            try:
+                t = self.tf_buffer.lookup_transform("odom", "base_link", Time())
+                pos = t.transform.translation
+                rot = t.transform.rotation
+                yaw = euler_from_quaternion(rot.x, rot.y, rot.z, rot.w)
+                self.robot_pose["x"] = round(pos.x, 3)
+                self.robot_pose["y"] = round(pos.y, 3)
+                self.robot_pose["yaw"] = round(yaw, 3)
+            except Exception:
+                pass
 
     def amcl_pose_cb(self, msg: PoseWithCovarianceStamped):
         """Updates robot global pose from AMCL."""
@@ -614,8 +624,11 @@ async def get_status():
 async def get_map_info(mode: str = "static"):
     if not ros_node:
         raise HTTPException(status_code=503, detail="ROS Bridge not started")
-    if mode == "slam" and ros_node.slam_map_image_bytes:
-        return ros_node.slam_map_info
+    if mode == "slam":
+        if ros_node.slam_map_image_bytes:
+            return ros_node.slam_map_info
+        # SLAM modunda henüz dinamik harita oluşmadıysa eski haritayı değil, boş harita bilgisi dön
+        return {"width": 0, "height": 0, "resolution": 0.05, "origin": {"x": 0.0, "y": 0.0}}
     return ros_node.static_map_info
 
 
@@ -623,8 +636,11 @@ async def get_map_info(mode: str = "static"):
 async def get_map_image(mode: str = "static"):
     if not ros_node:
         raise HTTPException(status_code=503, detail="ROS Node not initialized")
-    if mode == "slam" and ros_node.slam_map_image_bytes:
-        return Response(content=ros_node.slam_map_image_bytes, media_type="image/png")
+    if mode == "slam":
+        if ros_node.slam_map_image_bytes:
+            return Response(content=ros_node.slam_map_image_bytes, media_type="image/png")
+        # SLAM modunda henüz dinamik harita yokken ESKİ STATİK HARİTAYI ASLA GÖNDERME!
+        raise HTTPException(status_code=404, detail="SLAM map not generated yet")
     if ros_node.static_map_image_bytes:
         return Response(content=ros_node.static_map_image_bytes, media_type="image/png")
     raise HTTPException(status_code=404, detail="Map image not available")

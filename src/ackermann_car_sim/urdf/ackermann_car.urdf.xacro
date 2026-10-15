@@ -2,7 +2,7 @@
 <robot name="ackermann_car" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- ==================== PARAMETERS ==================== -->
-  <xacro:property name="wheelbase" value="0.20"/>
+  <xacro:property name="wheelbase" value="0.15"/>
   <xacro:property name="track_width" value="0.18"/>
   <xacro:property name="wheel_radius" value="0.035"/>
   <xacro:property name="wheel_width" value="0.026"/>
@@ -171,8 +171,8 @@
   <joint name="lidar_joint" type="fixed">
     <parent link="base_link"/>
     <child link="lidar_link"/>
-    <!-- LiDAR öne alındı: ön engelleri daha erken algılar (K-3 düzeltmesi) -->
-    <origin xyz="${chassis_length/2 - 0.02} 0 ${chassis_height + 0.04}" rpy="0 0 0"/>
+    <!-- LiDAR şasinin tam merkezinde (köşegenlerin kesişim noktası) -->
+    <origin xyz="0 0 ${chassis_height + 0.04}" rpy="0 0 0"/>
   </joint>
 
   <!-- ==================== INTEL REALSENSE CAMERA ==================== -->

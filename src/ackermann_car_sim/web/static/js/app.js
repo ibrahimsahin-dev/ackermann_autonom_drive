@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Operational State
   const state = {
     connected: false,
-    mode: 'nav', // 'nav' or 'slam'
+    mode: window.location.pathname.includes('mapping') ? 'slam' : 'nav',
     navStatus: 'STANDBY',
     previousNavStatus: 'STANDBY',
     estop: false,
@@ -23,7 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
   };
 
   // 1. Initialize High-Precision Fullscreen CAD Map Viewer
+  const isSlamPage = window.location.pathname.includes('mapping');
   const mapViewer = new MapViewer('map-canvas', {
+    slamMode: isSlamPage,
     onGoalSelected: (x, y, yaw) => dispatchGoal(x, y, yaw),
     onInitialPoseSelected: (x, y, yaw) => setInitialPose(x, y, yaw),
     onWaypointAddRequested: (x, y) => promptAddWaypoint(x, y),
