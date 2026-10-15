@@ -80,7 +80,7 @@ def generate_launch_description():
         executable='static_transform_publisher',
         name='base_link_to_laser_tf',
         output='screen',
-        arguments=['0.12', '0.0', '0.12',   # x y z  (lidar_link ile aynı)
+        arguments=['0.0', '0.0', '0.12',    # x=0.0 (şasi tam merkezi), y=0.0, z=0.12 m
                    '0.0',  '0.0', '0.0',    # roll pitch yaw
                    'base_link', 'laser']    # parent → child
     )
