@@ -75,10 +75,14 @@ class ArduinoMegaBridgeNode(Node):
         self.declare_parameter('port', '/dev/ttyACM1')
         self.declare_parameter('baudrate', 115200)
         self.declare_parameter('wheelbase', 0.15) # 15 cm aks mesafesi
+        self.declare_parameter('invert_drive', True) # Motor donanım kutupları tersse (W basınca geri gidiyorsa) True
 
         self.port_name = self.get_parameter('port').get_parameter_value().string_value
         self.baudrate = self.get_parameter('baudrate').get_parameter_value().integer_value
         self.wheelbase = self.get_parameter('wheelbase').get_parameter_value().double_value
+        self.invert_drive = self.get_parameter('invert_drive').get_parameter_value().bool_value
+        if self.invert_drive:
+            self.get_logger().info("🔄 Motor yönü ters çevirme (yazılımsal polarite düzeltmesi) AKTİF (W -> İleri).")
 
         # Akıllı Seri Port Seçimi (LiDAR ile çakışmayı önler)
         self.ser = None
@@ -115,6 +119,9 @@ class ArduinoMegaBridgeNode(Node):
         vx = msg.linear.x
         wz = msg.angular.z
 
+        # Yazılımsal polarite düzeltmesi: Donanımdaki ters kutup bağlantısını düzeltir
+        motor_vx = -vx if self.invert_drive else vx
+
         # Ackermann Steering Angle Calculation (rad to deg)
         steer_deg = 0.0
         if abs(vx) > 0.01:
@@ -128,13 +135,13 @@ class ArduinoMegaBridgeNode(Node):
         # Mekanik koruma: direksiyon açısını maks -22 / +22 derece ile sınırla
         steer_deg = max(-22.0, min(22.0, steer_deg))
 
-        cmd_str = f"CMD,{vx:.2f},{steer_deg:.1f}\n"
+        cmd_str = f"CMD,{motor_vx:.2f},{steer_deg:.1f}\n"
 
         if self.ser and self.ser.is_open:
             try:
                 self.ser.write(cmd_str.encode('utf-8'))
                 if abs(vx) > 0.01 or abs(steer_deg) > 0.5:
-                    self.get_logger().info(f"📤 Arduino'ya Gönderildi: v={vx:.2f} m/s | steer={steer_deg:+.1f}° -> {cmd_str.strip()}")
+                    self.get_logger().info(f"📤 Arduino'ya Gönderildi: v={motor_vx:.2f} m/s (istenen={vx:.2f}) | steer={steer_deg:+.1f}° -> {cmd_str.strip()}")
             except Exception as e:
                 self.get_logger().error(f"Seri port yazma hatası: {e}")
 
