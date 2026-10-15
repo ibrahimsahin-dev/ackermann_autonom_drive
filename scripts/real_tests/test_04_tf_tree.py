@@ -45,7 +45,8 @@ class TfSanityTester(Node):
             ("odom", "base_footprint", "Odometri Bağlantısı (Motor / Lazer Odometri)"),
             ("base_footprint", "base_link", "Araç Taban Şasisi (URDF / Robot State Publisher)"),
             ("base_link", "lidar_link", "LiDAR Sensör Montajı (URDF / Robot State Publisher)"),
-            ("odom", "lidar_link", "Uçtan Uca Tam Zincir (Nav2 için Kritik)")
+            ("base_link", "laser", "LiDAR Sensör Gözü (urg_node 'laser' Frame)"),
+            ("odom", "laser", "Uçtan Uca Tam Zincir (Nav2 & RF2O için Kritik)")
         ]
 
         print("\033[H\033[J", end="") # Ekranı temizle
